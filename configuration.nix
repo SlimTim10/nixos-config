@@ -28,6 +28,11 @@ let
     add control = Control_L Control_R
     add mod1 = Alt_L Meta_L
   '';
+  hibernate = pkgs.writeShellScriptBin "hibernate" ''
+    echo "Hibernating..."
+    dm-tool lock
+    systemctl hibernate
+  '';
 in
 {
   imports =
@@ -39,7 +44,11 @@ in
 
   system.activationScripts = {
     linkXmonadConfig = ''
-      ln -s /home/tim/.nix-config/xmonad.hs /home/tim/.xmonad/xmonad.hs
+      ln -sf /home/tim/.nix-config/xmonad.hs /home/tim/.xmonad/xmonad.hs
+    '';
+    linkEmacsConfig = ''
+      ln -sf /home/tim/emacs-home/.emacs.d/ /home/tim/.emacs.d
+      ln -sf /home/tim/emacs-home/.emacs /home/tim/.emacs
     '';
   };
 
@@ -163,6 +172,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    hibernate
     git
     emacs
     vim
@@ -175,6 +185,7 @@ in
     google-chrome
     #nvidia-offload
     zoom-us
+    hardinfo
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
