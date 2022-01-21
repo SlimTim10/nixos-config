@@ -7,6 +7,11 @@ let
   '';
 in
 {
+  imports =
+    [
+      ./packages/dropbox.nix
+    ];
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -16,6 +21,7 @@ in
     vim
     wget
     dmenu # app launcher
+    htop # process monitor
     xclip # clipboard help
     keepass
     thunderbird # email
@@ -24,5 +30,7 @@ in
     zoom-us
     hardinfo # hardware info GUI
     pavucontrol # audio controls GUI
+    dropbox
+    dropbox-cli
   ];
 }
