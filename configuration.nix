@@ -5,13 +5,6 @@
 { config, pkgs, ... }:
 
 let
-#  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-#    export __NV_PRIME_RENDER_OFFLOAD=1
-#    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-#    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-#    export __VK_LAYER_NV_optimus=NVIDIA_only
-#    exec -a "$0" "$@"
-#  '';
   myCustomLayout = pkgs.writeText "xkb-layout" ''
     ! Swap ctrl and alt, and map capslock to alt
     clear lock
@@ -25,16 +18,12 @@ let
     add control = Control_L Control_R
     add mod1 = Alt_L Meta_L
   '';
-  hibernate = pkgs.writeShellScriptBin "hibernate" ''
-    echo "Hibernating..."
-    dm-tool lock
-    systemctl hibernate
-  '';
 in
 {
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
+      ./packages.nix
       ./xmonad.nix
       # ./xfce.nix
     ];
@@ -105,33 +94,9 @@ in
   # xrandr -s 3840x2160 --output HDMI-A-0 --scale-from 1440x900
   services.xserver.resolutions = [ { x = 1440; y = 900; } ];
 
-  # Keymap
+  # Use my keymap
   services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
       
-  # Settings for Nvidia graphics card (should be in separate file)
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  # Offload
-  #hardware.nvidia = {
-  #  # beta drivers
-  #  package = config.boot.kernelPackages.nvidiaPackages.beta;
-  #  # fixes a glitch
-  #  nvidiaPersistenced = true;
-  #  # required for amd gpu and nvidia gpu pairings
-  #  modesetting.enable = true;
-  #  prime = {
-  #    offload.enable = true;
-  #    #sync.enable = true;
-  #    amdgpuBusId = "PCI:30:0:0";
-  #    nvidiaBusId = "PCI:10:0:0";
-  #  };
-  #};
-  #hardware.nvidia.modesetting.enable = true;
-  #hardware.nvidia.prime = {
-  #  sync.enable = true;
-  #  nvidiaBusId = "PCI:10:0:0";
-  #  amdgpuBusId = "PCI:30:0:0";
-  #};
-
   # Configure keymap in X11
   services.xserver.layout = "us";
 
@@ -151,25 +116,6 @@ in
     extraGroups = [ "wheel" "networkmanager" ];
     home = "/home/tim";
   };
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    hibernate
-    git
-    emacs
-    vim
-    wget
-    dmenu
-    xclip
-    keepass
-    thunderbird
-    firefox # 29.0.1
-    google-chrome
-    #nvidia-offload
-    zoom-us
-    hardinfo
-  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
