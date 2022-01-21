@@ -4,7 +4,7 @@
 
 { config, pkgs, ... }:
 
-#let
+let
 #  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
 #    export __NV_PRIME_RENDER_OFFLOAD=1
 #    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
@@ -12,9 +12,6 @@
 #    export __VK_LAYER_NV_optimus=NVIDIA_only
 #    exec -a "$0" "$@"
 #  '';
-#in
-
-let
   myCustomLayout = pkgs.writeText "xkb-layout" ''
     ! Swap ctrl and alt, and map capslock to alt
     clear lock
@@ -38,10 +35,13 @@ in
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
+      ./xmonad.nix
+      # ./xfce.nix
     ];
 
   nixpkgs.config.allowUnfree = true;
 
+  # Run scripts at startup
   system.activationScripts = {
     linkXmonadConfig = ''
       ln -sf /home/tim/.nix-config/xmonad.hs /home/tim/.xmonad/xmonad.hs
@@ -51,6 +51,10 @@ in
       ln -sf /home/tim/emacs-home/.emacs /home/tim/.emacs
     '';
   };
+
+  environment.interactiveShellInit = ''
+    alias pbcopy='xclip -selection clipboard'
+  '';
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -86,46 +90,25 @@ in
   networking.interfaces.enp38s0.useDHCP = true;
   networking.interfaces.wlo1.useDHCP = true;
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
   # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
-  # console = {
-  #   font = "Lat2-Terminus16";
-  #   keyMap = "us";
-  # };
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+    font = "Lat2-Terminus16";
+    keyMap = "us";
+  };
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
-  # Monitor setup
+  # Set resolution
+  # TODO: make automatic (4K monitor resolution needs DPI scaling)
+  # xrandr -s 3840x2160 --output HDMI-A-0 --scale-from 1440x900
   services.xserver.resolutions = [ { x = 1440; y = 900; } ];
-
-  # XMonad
-  services.xserver.windowManager.xmonad.enable = true;
-  services.xserver.autorun = true;
-  services.xserver.displayManager.defaultSession = "none+xmonad";
 
   # Keymap
   services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
-
-  # xfce
-  #services.xserver = {
-  #  #enable = true;
-  #  desktopManager = {
-  #    xterm.enable = false;
-  #    xfce.enable = true;
-  #  };
-  #  displayManager.defaultSession = "xfce";
-  #};
-  
-  environment.interactiveShellInit = ''
-    alias pbcopy='xclip -selection clipboard'
-  '';
-  
-  # Graphics
+      
+  # Settings for Nvidia graphics card (should be in separate file)
   #services.xserver.videoDrivers = [ "nvidia" ];
   # Offload
   #hardware.nvidia = {
@@ -153,7 +136,7 @@ in
   services.xserver.layout = "us";
 
   # Enable CUPS to print documents.
-  # services.printing.enable = true;
+  services.printing.enable = true;
 
   # Enable sound.
   sound.enable = true;
