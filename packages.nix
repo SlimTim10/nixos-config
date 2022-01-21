@@ -15,13 +15,14 @@ in
     emacs
     vim
     wget
-    dmenu
-    xclip
+    dmenu # app launcher
+    xclip # clipboard help
     keepass
-    thunderbird
-    firefox # 29.0.1
+    thunderbird # email
+    firefox
     google-chrome
     zoom-us
-    hardinfo
+    hardinfo # hardware info GUI
+    pavucontrol # audio controls GUI
   ];
 }
