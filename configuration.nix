@@ -104,6 +104,9 @@ in
   services.printing.enable = true;
 
   # Enable sound.
+  # TODO: get audio working with HDMI
+  #   aplay -L
+  #   speaker-test -Dhdmi:Generic -c6 -twav -p1
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
@@ -113,7 +116,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" ];
     home = "/home/tim";
   };
 
