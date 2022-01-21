@@ -32,5 +32,6 @@ in
     pavucontrol # audio controls GUI
     dropbox
     dropbox-cli
+    slack # HiDPI resolution fix: --force-device-scale-factor=1.5
   ];
 }
