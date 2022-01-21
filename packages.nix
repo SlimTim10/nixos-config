@@ -2,7 +2,6 @@
 
 let
   hibernate = pkgs.writeShellScriptBin "hibernate" ''
-    echo "Hibernating..."
     dm-tool lock
     systemctl hibernate
   '';
