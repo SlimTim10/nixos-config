@@ -1,0 +1,6 @@
+* nixos-config
+
+** From new NixOS installation
+- Clone this repo to ~/home/tim/.nix-config~
+- Clone emacs-home to ~/home/tim/emacs-home~
+- Run nixos-rebuild.sh
