@@ -7,6 +7,11 @@
     allowedUDPPorts = [ 17500 ];
   };
 
+  environment.systemPackages = with pkgs; [
+    dropbox
+    dropbox-cli
+  ];
+
   systemd.user.services.dropbox = {
     description = "Dropbox";
     wantedBy = [ "graphical-session.target" ];

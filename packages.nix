@@ -10,6 +10,7 @@ in
   imports =
     [
       ./packages/dropbox.nix
+      ./packages/spotify.nix
     ];
   
   # List packages installed in system profile. To search, run:
@@ -23,15 +24,14 @@ in
     dmenu # app launcher
     htop # process monitor
     xclip # clipboard help
-    keepass
+    keepassxc
     thunderbird # email
     firefox
     google-chrome
     zoom-us
     hardinfo # hardware info GUI
     pavucontrol # audio controls GUI
-    dropbox
-    dropbox-cli
     slack # HiDPI resolution fix: --force-device-scale-factor=1.5
+    mpv
   ];
 }
