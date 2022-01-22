@@ -5,18 +5,23 @@ let
     dm-tool lock
     systemctl hibernate
   '';
+  lock-screen = pkgs.writeShellScriptBin "lock-screen" ''
+    dm-tool lock
+  '';
 in
 {
   imports =
     [
       ./packages/dropbox.nix
       ./packages/spotify.nix
+      ./packages/steam.nix
     ];
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     hibernate
+    lock-screen
     git
     emacs
     vim
