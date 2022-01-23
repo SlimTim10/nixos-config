@@ -38,5 +38,7 @@ in
     pavucontrol # audio controls GUI
     slack # HiDPI resolution fix: --force-device-scale-factor=1.5
     mpv
+    nodejs
+    qbittorrent
   ];
 }
