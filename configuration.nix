@@ -92,7 +92,7 @@ in
   # Set resolution
   # TODO: make automatic (4K monitor resolution needs DPI scaling)
   # xrandr -s 3840x2160 --output HDMI-A-0 --scale-from 1440x900
-  services.xserver.resolutions = [ { x = 1440; y = 900; } ];
+  # services.xserver.resolutions = [ { x = 1440; y = 900; } ];
 
   # Use my keymap
   services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
