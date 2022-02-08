@@ -36,6 +36,9 @@ in
     linkXmonadConfig = ''
       ln -sf /home/tim/.nix-config/xmonad.hs /home/tim/.xmonad/xmonad.hs
     '';
+    linkXmobarConfig = ''
+      ln -sf /home/tim/.nix-config/.xmobarrc /home/tim/.xmobarrc
+    '';
     linkEmacsConfig = ''
       ln -sf /home/tim/emacs-home/.emacs.d/ /home/tim/.emacs.d
       ln -sf /home/tim/emacs-home/.emacs /home/tim/.emacs
