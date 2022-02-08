@@ -16,6 +16,10 @@ in
       ./packages/spotify.nix
       ./packages/steam.nix
     ];
+
+  # For Haskell Reflex FRP
+  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" ];
+  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
