@@ -40,5 +40,7 @@ in
     mpv
     nodejs
     qbittorrent
+    # haskellPackages.xmobar
+    # xmobar
   ];
 }
