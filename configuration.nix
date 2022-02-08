@@ -109,8 +109,15 @@ in
   hardware.pulseaudio.enable = true;
 
   # Enable PostgreSQL
-  services.postgresql.enable = true;
-  services.postgresql.package = pkgs.postgresql_14;
+  services.postgresql = {
+    enable = true;
+    package = pkgs.postgresql_14;
+    enableTCPIP = true;
+    authentication = pkgs.lib.mkOverride 14 ''
+      local all all trust
+      host all all ::1/128 trust
+    '';
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
