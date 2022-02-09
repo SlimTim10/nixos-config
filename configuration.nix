@@ -73,6 +73,9 @@ in
     '';
   };
 
+  # Save space via hardlinking store files (recommended for SSDs)
+  nix.autoOptimiseStore = true;
+
   # Set your time zone.
   time.timeZone = "America/Toronto";
 
