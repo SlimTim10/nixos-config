@@ -43,6 +43,9 @@ in
       ln -sf /home/tim/emacs-home/.emacs.d/ /home/tim/.emacs.d
       ln -sf /home/tim/emacs-home/.emacs /home/tim/.emacs
     '';
+    linkMpvConfig = ''
+      ln -sf /home/tim/.nix-config/mpv.conf /home/tim/.config/mpv/mpv.conf
+    '';
   };
 
   environment.interactiveShellInit = ''
