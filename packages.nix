@@ -36,7 +36,10 @@ in
     lock-screen
     
     git
+    
     emacs
+    imagemagick # for image-dired in emacs
+    
     vim
     wget
     ag # https://github.com/ggreer/the_silver_searcher/
