@@ -30,6 +30,7 @@ in
     emacs
     vim
     wget
+    ag # https://github.com/ggreer/the_silver_searcher/
     dmenu # app launcher
     htop # process monitor
     xclip # clipboard help
