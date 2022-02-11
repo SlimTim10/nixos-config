@@ -12,6 +12,10 @@ let
   process-monitor = pkgs.writeShellScriptBin "process-monitor" ''
     xterm -e htop
   '';
+  # Launch firefox with Toronto weather forecast
+  weather = pkgs.writeShellScriptBin "weather" ''
+    firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
+  '';
 in
 {
   imports =
@@ -45,6 +49,7 @@ in
     keepassxc # password manager
     thunderbird # email
     firefox
+    weather
     google-chrome
     zoom-us # video meetings
     hardinfo # hardware info GUI
