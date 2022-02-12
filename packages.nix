@@ -62,5 +62,7 @@ in
     nodejs
     qbittorrent
     xmobar
+    xfce.thunar # graphical file manager
   ];
+  services.tumbler.enable = true; # thumbnail support for images in thunar
 }
