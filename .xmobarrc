@@ -13,7 +13,7 @@ Config
     , Run Date "%a %b %_d %l:%M %p" "date" 10
     , Run DynNetwork [
         "--template"
-        , "<dev>: <tx>kB/s|<rx>kB/s"
+        , "<dev>: <rx>kB/s|<tx>kB/s"
         , "--Low"      , "1000"       -- units: B/s
         , "--High"     , "5000"       -- units: B/s
         , "--low"      , "darkgreen"
