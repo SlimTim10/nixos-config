@@ -13,7 +13,7 @@ main = xmonad =<< xmobar def
   }
   where
     mykeys (XConfig {modMask = modm}) = M.fromList $
-      [ ((modm, xK_x), spawn "lock-screen")
+      [ ((modm .|. shiftMask, xK_x), spawn "lock-screen")
       , ((modm, xK_g), goToSelected def)
       , ((modm, xK_e), runOrRaise "emacs" (className =? "Emacs"))
       ]
