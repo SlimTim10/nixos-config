@@ -50,6 +50,7 @@ in
 
   environment.interactiveShellInit = ''
     alias pbcopy='xclip -selection clipboard'
+    alias cp='rsync -avhP'
   '';
 
   # Use the systemd-boot EFI boot loader.
