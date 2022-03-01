@@ -139,6 +139,12 @@ in
     home = "/home/tim";
   };
 
+  xdg.mime.defaultApplications = {
+    "video/mp4" = "mpv.desktop";
+    "application/pdf" = "firefox.desktop";
+    "x-scheme-handler/mailto" = "thunderbird.desktop";
+  };
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
