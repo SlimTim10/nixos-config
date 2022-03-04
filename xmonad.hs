@@ -20,10 +20,17 @@ main = xmonad =<< xmobar def
   where
     mykeys (XConfig {modMask = modm}) = M.fromList $
       [ ((modm, xK_x), spawn "lock-screen")
+      -- Go to window by name search
       , ((modm, xK_g), windowPrompt
           def { searchPredicate = myFuzzyFinderFunction }
           Goto
           allWindows)
+      -- Bring window by name search
+      , ((modm .|. shiftMask, xK_g), windowPrompt
+          def { searchPredicate = myFuzzyFinderFunction }
+          Bring
+          allWindows)
+      -- Go to emacs
       , ((modm, xK_e), runOrRaise "emacs" (className =? "Emacs"))
       ]
 
