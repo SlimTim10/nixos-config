@@ -3,6 +3,10 @@ import XMonad.Actions.GridSelect
 import XMonad.Layout.NoBorders
 import XMonad.Hooks.DynamicLog
 import XMonad.Actions.WindowGo
+import XMonad.Prompt
+import XMonad.Prompt.Window
+import Data.List (isInfixOf)
+import Data.Char (toLower)
 import qualified Data.Map as M
 
 main :: IO ()
@@ -15,7 +19,13 @@ main = xmonad =<< xmobar def
   }
   where
     mykeys (XConfig {modMask = modm}) = M.fromList $
-      [ ((modm .|. shiftMask, xK_x), spawn "lock-screen")
-      , ((modm, xK_g), goToSelected def)
+      [ ((modm, xK_x), spawn "lock-screen")
+      , ((modm, xK_g), windowPrompt
+          def { searchPredicate = myFuzzyFinderFunction }
+          Goto
+          allWindows)
       , ((modm, xK_e), runOrRaise "emacs" (className =? "Emacs"))
       ]
+
+myFuzzyFinderFunction :: String -> String -> Bool
+myFuzzyFinderFunction a b = map toLower a `isInfixOf` map toLower b
