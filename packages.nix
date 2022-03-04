@@ -13,7 +13,7 @@ let
     xterm -e htop
   '';
   # Launch firefox with Toronto weather forecast
-  weather = pkgs.writeShellScriptBin "weather" ''
+  weather-forecast = pkgs.writeShellScriptBin "weather-forecast" ''
     firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
   '';
 in
@@ -52,7 +52,7 @@ in
     keepassxc # password manager
     thunderbird # email
     firefox
-    weather
+    weather-forecast
     google-chrome
     zoom-us # video meetings
     hardinfo # hardware info GUI
