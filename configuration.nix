@@ -44,7 +44,7 @@ in
       ln -sf /home/tim/emacs-home/.emacs /home/tim/.emacs
     '';
     linkMpvConfig = ''
-      ln -sf /home/tim/.nix-config/mpv /home/tim/.config/mpv
+      ln -sf /home/tim/.nix-config/mpv/ /home/tim/.config/mpv
     '';
   };
 
