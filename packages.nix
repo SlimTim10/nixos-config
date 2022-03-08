@@ -16,6 +16,12 @@ let
   weather-forecast = pkgs.writeShellScriptBin "weather-forecast" ''
     firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
   '';
+  # Restart dropbox
+  restart-dropbox = pkgs.writeShellScriptBin "restart-dropbox" ''
+    dropbox stop
+    sleep 5
+    dropbox start
+  '';
 in
 {
   imports =
@@ -53,6 +59,7 @@ in
     thunderbird # email
     firefox
     weather-forecast
+    restart-dropbox
     google-chrome
     zoom-us # video meetings
     hardinfo # hardware info GUI
