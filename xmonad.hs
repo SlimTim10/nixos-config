@@ -5,6 +5,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Actions.WindowGo
 import XMonad.Prompt
 import XMonad.Prompt.Window
+import qualified XMonad.StackSet as W
 import Data.List (isInfixOf)
 import Data.Char (toLower)
 import qualified Data.Map as M
@@ -21,7 +22,7 @@ main = xmonad =<< xmobar def
     mykeys (XConfig {modMask = modm}) = M.fromList $
       [ ((modm, xK_x), spawn "lock-screen")
       -- Go to window by name search
-      , ((modm, xK_g), windowPrompt
+      , ((modm, xK_s), windowPrompt
           def
           { searchPredicate = myFuzzyFinderFunction
           , alwaysHighlight = True
@@ -29,12 +30,15 @@ main = xmonad =<< xmobar def
           Goto
           allWindows)
       -- Bring window by name search
-      , ((modm .|. shiftMask, xK_g), windowPrompt
+      , ((modm .|. shiftMask, xK_s), windowPrompt
           def { searchPredicate = myFuzzyFinderFunction }
           Bring
           allWindows)
       -- Go to emacs
       , ((modm, xK_e), runOrRaise "emacs" (className =? "Emacs"))
+      -- Movement bindings like emacs
+      , ((modm, xK_o), windows W.focusDown)
+      , ((modm .|. shiftMask, xK_o), windows W.focusUp)
       ]
 
 myFuzzyFinderFunction :: String -> String -> Bool
