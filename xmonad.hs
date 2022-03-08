@@ -22,7 +22,10 @@ main = xmonad =<< xmobar def
       [ ((modm, xK_x), spawn "lock-screen")
       -- Go to window by name search
       , ((modm, xK_g), windowPrompt
-          def { searchPredicate = myFuzzyFinderFunction }
+          def
+          { searchPredicate = myFuzzyFinderFunction
+          , alwaysHighlight = True
+          }
           Goto
           allWindows)
       -- Bring window by name search
