@@ -70,6 +70,7 @@ in
     qbittorrent
     xmobar
     xfce.thunar # graphical file manager
+    libreoffice
   ];
   services.tumbler.enable = true; # thumbnail support for images in thunar
 }

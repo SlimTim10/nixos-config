@@ -143,6 +143,7 @@ in
     "video/mp4" = "mpv.desktop";
     "application/pdf" = "firefox.desktop";
     "x-scheme-handler/mailto" = "thunderbird.desktop";
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
