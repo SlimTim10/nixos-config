@@ -8,7 +8,8 @@ import qualified XMonad.Actions.WindowGo as WindowGo
 import XMonad.Actions.WindowGo ((=?))
 import qualified XMonad.StackSet as W
 import qualified XMonad.Actions.DynamicWorkspaces as DW
-import XMonad.Util.EZConfig as EZConfig
+import qualified XMonad.Util.EZConfig as EZConfig
+import qualified XMonad.Actions.CycleWS as CycleWS
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -45,13 +46,17 @@ main = do
       , ("M--", DW.removeWorkspace)
       -- Rename workspace
       , ("M-S--", DW.renameWorkspace X.def)
+      -- Go back to most recent workspace
+      , ("M-/", CycleWS.toggleWS)
+      , ("M-<Right>", CycleWS.nextWS)
+      , ("M-<Left>", CycleWS.prevWS)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
       ++
-      map (\i -> ("M-" ++ show (i+1), DW.withNthWorkspace W.greedyView i)) [0 .. 8]
+      map (\n -> ("M-" ++ show n, DW.withNthWorkspace W.greedyView (n-1))) [1 .. 9]
       ++
-      map (\i -> ("M-S-" ++ show (i+1), DW.withNthWorkspace W.shift i)) [0 .. 8]
+      map (\n -> ("M-S-" ++ show n, DW.withNthWorkspace W.shift (n-1))) [1 .. 9]
       )
   X.xmonad xmobar
   where
