@@ -7,6 +7,7 @@ import qualified XMonad.Hooks.DynamicLog as DynamicLog
 import qualified XMonad.Actions.WindowGo as WindowGo
 import XMonad.Actions.WindowGo ((=?))
 import qualified XMonad.StackSet as W
+import qualified XMonad.Actions.DynamicWorkspaces as DW
 import XMonad.Util.EZConfig as EZConfig
 import qualified Data.List as L
 import qualified Data.Char as C
@@ -16,36 +17,52 @@ main :: IO ()
 main = do
   xmobar <- DynamicLog.xmobar $ X.def
     { X.modMask = X.mod4Mask
-    -- , X.keys = \c -> mykeys c `M.union` X.keys X.defaultConfig c
     , X.layoutHook = Layout.smartBorders $ X.layoutHook X.def
     , X.borderWidth = 2
     , X.focusedBorderColor = "#00FF00"
+    -- , X.keys = \c -> keys c `M.union` X.keys X.defaultConfig c
+    , X.workspaces = workspaces
     }
-    `EZConfig.additionalKeysP`
-    [ ("M-x", X.spawn "lock-screen")
-    -- Go to window by name search
-    , ("M-s", PromptW.windowPrompt
-        X.def
-        { Prompt.searchPredicate = myFuzzyFinderFunction
-        , Prompt.alwaysHighlight = True
-        }
-        PromptW.Goto
-        PromptW.allWindows)
-    -- Bring window by name search
-    , ("M-S-s", PromptW.windowPrompt
-        X.def { Prompt.searchPredicate = myFuzzyFinderFunction }
-        PromptW.Bring
-        PromptW.allWindows)
-    -- Go to emacs
-    , ("M-e", WindowGo.runOrRaise "emacs" (WindowGo.className =? "Emacs"))
-    -- Movement bindings like emacs
-    , ("M-o", X.windows W.focusDown)
-    , ("M-S-o", X.windows W.focusUp)
+    `EZConfig.removeKeysP`
+    [ "M-S-/"
     ]
+    `EZConfig.additionalKeysP`
+    ( [ ("M-x", X.spawn "lock-screen")
+      -- Go to window by name search
+      , ("M-s", PromptW.windowPrompt promptDef PromptW.Goto PromptW.allWindows)
+      -- Bring window by name search
+      , ("M-S-s", PromptW.windowPrompt promptDef PromptW.Bring PromptW.allWindows)
+      -- Go to emacs
+      , ("M-e", WindowGo.runOrRaise "emacs" (WindowGo.className =? "Emacs"))
+      -- Movement bindings like emacs
+      , ("M-o", X.windows W.focusDown)
+      , ("M-S-o", X.windows W.focusUp)
+      -- Add or select workspace
+      , ("M-=", DW.selectWorkspace promptDef)
+      -- Move current window to workspace
+      , ("M-S-=", DW.withWorkspace promptDef (X.windows . W.shift))
+      -- Remove workspace
+      , ("M--", DW.removeWorkspace)
+      -- Rename workspace
+      , ("M-S--", DW.renameWorkspace X.def)
+      ]
+      -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
+      -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
+      ++
+      map (\i -> ("M-" ++ show (i+1), DW.withNthWorkspace W.greedyView i)) [0 .. 8]
+      ++
+      map (\i -> ("M-S-" ++ show (i+1), DW.withNthWorkspace W.shift i)) [0 .. 8]
+      )
   X.xmonad xmobar
+  where
+    promptDef = X.def
+      { Prompt.searchPredicate = myFuzzyFinder
+      , Prompt.alwaysHighlight = True
+      }
+    workspaces = ["1:main", "2:web", "3:media", "4:meeting"] ++ map show [5 .. 9]
 
-myFuzzyFinderFunction :: String -> String -> Bool
-myFuzzyFinderFunction a b = map C.toLower a `L.isInfixOf` map C.toLower b
+myFuzzyFinder :: String -> String -> Bool
+myFuzzyFinder a b = map C.toLower a `L.isInfixOf` map C.toLower b
 
 {-
 DEFAULT KEY BINDINGS
