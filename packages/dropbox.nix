@@ -29,4 +29,14 @@
       Nice = 10;
     };
   };
+
+  systemd.user.services.trigger-dropbox = {
+    description = "Trigger Dropbox after suspend/hibernate";
+    wantedBy = [ "suspend.target" "hibernate.target" ];
+    after = [ "suspend.target" "hibernate.target" ];
+    serviceConfig = {
+      ExecStart = "touch /home/tim/Dropbox/wakeup_call";
+      Type = "forking";
+    };
+  };
 }
