@@ -1,11 +1,10 @@
 import qualified XMonad as X
-import XMonad ((.|.))
+import XMonad ((.|.), (=?), (-->), (<+>))
 import qualified XMonad.Prompt as Prompt
 import qualified XMonad.Prompt.Window as PromptW
 import qualified XMonad.Layout.NoBorders as Layout
 import qualified XMonad.Hooks.DynamicLog as DynamicLog
 import qualified XMonad.Actions.WindowGo as WindowGo
-import XMonad.Actions.WindowGo ((=?))
 import qualified XMonad.StackSet as W
 import qualified XMonad.Actions.DynamicWorkspaces as DW
 import qualified XMonad.Util.EZConfig as EZConfig
@@ -23,6 +22,7 @@ main = do
     , X.focusedBorderColor = "#00FF00"
     -- , X.keys = \c -> keys c `M.union` X.keys X.defaultConfig c
     , X.workspaces = workspaces
+    , X.manageHook = myManageHook <+> X.manageHook X.defaultConfig
     }
     `EZConfig.removeKeysP`
     [ "M-S-/"
@@ -68,6 +68,10 @@ main = do
 
 myFuzzyFinder :: String -> String -> Bool
 myFuzzyFinder a b = map C.toLower a `L.isInfixOf` map C.toLower b
+
+myManageHook = X.composeAll
+  [ X.title =? "zoom"  --> X.doFloat
+  ]
 
 {-
 DEFAULT KEY BINDINGS
