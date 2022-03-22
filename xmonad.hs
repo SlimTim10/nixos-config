@@ -70,7 +70,12 @@ myFuzzyFinder :: String -> String -> Bool
 myFuzzyFinder a b = map C.toLower a `L.isInfixOf` map C.toLower b
 
 myManageHook = X.composeAll
-  [ X.title =? "zoom"  --> X.doFloat
+  [ X.className =? "Thunderbird" --> X.doShift "2:web"
+  , X.className =? "Slack" --> X.doShift "2:web"
+  , X.className =? "qBittorrent" --> X.doShift "3:media"
+  , X.className =? "Spotify" --> X.doShift "3:media"
+  , X.className =? "zoom" --> X.doShift "4:meeting"
+  , X.title =? "zoom"  --> X.doFloat
   ]
 
 {-
