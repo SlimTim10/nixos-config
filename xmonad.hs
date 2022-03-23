@@ -9,6 +9,8 @@ import qualified XMonad.StackSet as W
 import qualified XMonad.Actions.DynamicWorkspaces as DW
 import qualified XMonad.Util.EZConfig as EZConfig
 import qualified XMonad.Actions.CycleWS as CycleWS
+import qualified XMonad.Layout.Minimize as Minimize
+import qualified XMonad.Actions.Minimize as Minimize
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -17,7 +19,7 @@ main :: IO ()
 main = do
   xmobar <- DynamicLog.xmobar $ X.def
     { X.modMask = X.mod4Mask
-    , X.layoutHook = Layout.smartBorders $ X.layoutHook X.def
+    , X.layoutHook = myLayout
     , X.borderWidth = 2
     , X.focusedBorderColor = "#00FF00"
     -- , X.keys = \c -> keys c `M.union` X.keys X.defaultConfig c
@@ -50,6 +52,8 @@ main = do
       , ("M-/", CycleWS.toggleWS)
       , ("M-<Right>", CycleWS.nextWS)
       , ("M-<Left>", CycleWS.prevWS)
+      , ("M-<Down>", X.withFocused Minimize.minimizeWindow)
+      , ("M-<Up>", Minimize.withLastMinimized Minimize.maximizeWindowAndFocus)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
@@ -77,6 +81,11 @@ myManageHook = X.composeAll
   , X.className =? "zoom" --> X.doShift "4:meeting"
   , X.title =? "zoom"  --> X.doFloat
   ]
+
+myLayout =
+  Minimize.minimize
+  $ Layout.smartBorders
+  $ X.layoutHook X.def
 
 {-
 DEFAULT KEY BINDINGS
