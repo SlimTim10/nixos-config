@@ -1,5 +1,5 @@
 import qualified XMonad as X
-import XMonad ((.|.), (=?), (-->), (<+>))
+import XMonad ((.|.), (=?), (-->), (<+>), (|||))
 import qualified XMonad.Prompt as Prompt
 import qualified XMonad.Prompt.Window as PromptW
 import qualified XMonad.Layout.NoBorders as Layout
@@ -9,8 +9,7 @@ import qualified XMonad.StackSet as W
 import qualified XMonad.Actions.DynamicWorkspaces as DW
 import qualified XMonad.Util.EZConfig as EZConfig
 import qualified XMonad.Actions.CycleWS as CycleWS
-import qualified XMonad.Layout.Minimize as Minimize
-import qualified XMonad.Actions.Minimize as Minimize
+import qualified XMonad.Layout.TwoPane as TwoPane
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -52,8 +51,6 @@ main = do
       , ("M-/", CycleWS.toggleWS)
       , ("M-<Right>", CycleWS.nextWS)
       , ("M-<Left>", CycleWS.prevWS)
-      , ("M-<Down>", X.withFocused Minimize.minimizeWindow)
-      , ("M-<Up>", Minimize.withLastMinimized Minimize.maximizeWindowAndFocus)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
@@ -83,9 +80,25 @@ myManageHook = X.composeAll
   ]
 
 myLayout =
-  Minimize.minimize
-  $ Layout.smartBorders
-  $ X.layoutHook X.def
+  Layout.smartBorders
+  $ tiled ||| X.Mirror tiled ||| twoPane ||| X.Full
+  where
+    -- default tiling algorithm partitions the screen into two panes
+    tiled = X.Tall nmaster delta ratio
+
+    -- A layout that splits the screen horizontally and shows two windows.
+    -- The left window is always the master window,
+    -- and the right is either the currently focused window or the second window in layout order.
+    twoPane = TwoPane.TwoPane delta ratio
+
+    -- The default number of windows in the master pane
+    nmaster = 1
+
+    -- Default proportion of screen occupied by master pane
+    ratio = 1/2
+
+    -- Percent of screen to increment by when resizing panes
+    delta = 3/100
 
 {-
 DEFAULT KEY BINDINGS
