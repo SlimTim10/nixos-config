@@ -46,6 +46,9 @@ in
     linkMpvConfig = ''
       ln -sf /home/tim/.nix-config/mpv/ /home/tim/.config/mpv
     '';
+    linkXresources = ''
+      ln -sf /home/tim/.nix-config/.Xresources /home/tim/.Xresources
+    '';
   };
 
   environment.interactiveShellInit = ''
