@@ -75,7 +75,7 @@ main = do
     workspaces = ["1:main", "2:web", "3:media", "4:meeting"] ++ map show [5 .. 9]
 
 showVolume :: String -> X.X ()
-showVolume = Dzen.dzenConfig centered
+showVolume = Dzen.dzenConfig (Dzen.timeout 1 >=> centered)
   where
     centered =
       Dzen.onCurr (Dzen.center 300 100)
