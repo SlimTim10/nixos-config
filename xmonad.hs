@@ -10,18 +10,22 @@ import qualified XMonad.Actions.DynamicWorkspaces as DW
 import qualified XMonad.Util.EZConfig as EZConfig
 import qualified XMonad.Actions.CycleWS as CycleWS
 import qualified XMonad.Layout.TwoPane as TwoPane
+import qualified XMonad.Actions.Volume as Vol
+import qualified XMonad.Util.Dzen as Dzen -- display volume
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
+import qualified Data.Bool as B
+import Control.Monad ((>=>))
 
 main :: IO ()
 main = do
   xmobar <- DynamicLog.xmobar $ X.def
     { X.modMask = X.mod4Mask
     , X.layoutHook = myLayout
-    , X.borderWidth = 2
-    , X.focusedBorderColor = "#00FF00"
-    -- , X.keys = \c -> keys c `M.union` X.keys X.defaultConfig c
+    , X.borderWidth = 8
+    , X.focusedBorderColor = "red"
+    , X.normalBorderColor = "black"
     , X.workspaces = workspaces
     , X.manageHook = myManageHook <+> X.manageHook X.defaultConfig
     }
@@ -51,6 +55,9 @@ main = do
       , ("M-/", CycleWS.toggleWS)
       , ("M-<Right>", CycleWS.nextWS)
       , ("M-<Left>", CycleWS.prevWS)
+      , ("<XF86AudioMute>", Vol.toggleMute >>= (B.bool (showVolume "mute") (showVolume "unmute")))
+      , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showVolume . show . round)
+      , ("<XF86AudioRaiseVolume>", Vol.raiseVolume 5 >>= showVolume . show . round)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
@@ -66,6 +73,16 @@ main = do
       , Prompt.alwaysHighlight = True
       }
     workspaces = ["1:main", "2:web", "3:media", "4:meeting"] ++ map show [5 .. 9]
+
+showVolume :: String -> X.X ()
+showVolume = Dzen.dzenConfig centered
+  where
+    centered =
+      Dzen.onCurr (Dzen.center 300 100)
+      >=> Dzen.font "-*-helvetica-*-r-*-*-64-*-*-*-*-*-*-*"
+      >=> Dzen.addArgs ["-fg", "#80c0ff"]
+      >=> Dzen.addArgs ["-bg", "#000040"]
+
 
 myFuzzyFinder :: String -> String -> Bool
 myFuzzyFinder a b = map C.toLower a `L.isInfixOf` map C.toLower b

@@ -71,6 +71,7 @@ in
     xmobar
     xfce.thunar # graphical file manager
     libreoffice
+    dzen2 # for displaying volume
   ];
   services.tumbler.enable = true; # thumbnail support for images in thunar
 }
