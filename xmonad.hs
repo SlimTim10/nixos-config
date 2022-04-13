@@ -47,8 +47,8 @@ main = do
       , ("M-=", DW.selectWorkspace promptDef)
       -- Move current window to workspace
       , ("M-S-=", DW.withWorkspace promptDef (X.windows . W.shift))
-      -- Remove workspace
-      , ("M--", DW.removeWorkspace)
+      -- Remove workspace (difficult sequence to avoid accidents)
+      , ("M-C-M1--", DW.removeWorkspace)
       -- Rename workspace
       , ("M-S--", DW.renameWorkspace X.def)
       -- Go back to most recent workspace
