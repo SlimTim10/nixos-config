@@ -35,3 +35,35 @@ $ nix-collect-garbage -d
 More info
 - https://nixos.wiki/wiki/Storage_optimization
 - https://nixos.org/manual/nix/stable/#sec-garbage-collection
+
+** File organization
+
+General configuration is in ~configuration.nix~.
+
+...
+
+** Installing and removing packages (programs)
+
+https://search.nixos.org/packages
+
+3 different ways:
+
+1. Permanent
+   Add to packages.nix
+
+2. Ephemeral
+   [tim@nixos:~]$ nix-shell -p tty-solitaire
+   [nix-shell:~]$ ttysolitaire
+   [nix-shell:~]$ exit
+   [tim@nixos:~]$ nix-collect-garbage
+
+3. Global
+(DON'T USE THIS)
+nix-env -iA nixos.tty-solitaire
+Deleting:
+nix-store --query --roots /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1.drv
+sudo nix store delete --ignore-liveness /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1
+
+** Navigation
+
+...
