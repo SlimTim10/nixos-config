@@ -67,3 +67,7 @@ sudo nix store delete --ignore-liveness /nix/store/17rr89knzpnk3hg3cb8fw63qw5lgl
 ** Navigation
 
 ...
+
+** Networking
+
+Use nmtui (or nmcli) from command line
