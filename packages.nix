@@ -72,6 +72,7 @@ in
     xfce.thunar # graphical file manager
     libreoffice
     dzen2 # for displaying volume
+    hledger # accounting
   ];
   services.tumbler.enable = true; # thumbnail support for images in thunar
 }
