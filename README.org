@@ -71,3 +71,17 @@ sudo nix store delete /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-
 ** Networking
 
 Use nmtui (or nmcli) from command line
+
+** Android file transfer
+
+Use ~jmtpfs~ to mount the device, then use ~rsync~ as root.
+
+#+begin_src
+$ nix-shell -p jmtpfs
+$ sudo jmtpfs /media
+$ su
+# cd "/media/Internal shared storage/DCIM/Camera"
+# rsync -avhP --ignore-existing VID_2022* /mnt/external-hdd/Photos\ and\ Videos/2022/misc/
+#+end_src
+
+See https://nixos.wiki/wiki/MTP.
