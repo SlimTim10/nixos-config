@@ -85,3 +85,11 @@ $ su
 #+end_src
 
 See https://nixos.wiki/wiki/MTP.
+
+** Backup files
+
+Sync drives, deleting files in destination that are not in source.
+
+#+begin_src
+$ rsync -avhP --delete /mnt/external-hdd/ /media/
+#+end_src
