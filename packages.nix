@@ -48,7 +48,7 @@ in
     
     vim
     wget
-    ag # https://github.com/ggreer/the_silver_searcher/
+    silver-searcher
     dmenu # app launcher
     
     htop # process monitor
