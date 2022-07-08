@@ -34,6 +34,7 @@ in
   # Run scripts at startup
   system.activationScripts = {
     linkXmonadConfig = ''
+      mkdir -p /home/tim/.xmonad
       ln -sf /home/tim/.nix-config/xmonad.hs /home/tim/.xmonad/xmonad.hs
     '';
     linkXmobarConfig = ''
@@ -44,6 +45,7 @@ in
       ln -sf /home/tim/emacs-home/.emacs /home/tim/.emacs
     '';
     linkMpvConfig = ''
+      mkdir -p /home/tim/.config
       ln -sf /home/tim/.nix-config/mpv/ /home/tim/.config/mpv
     '';
     linkXresources = ''
