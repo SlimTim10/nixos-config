@@ -48,7 +48,7 @@ in
     
     vim
     wget
-    ag # https://github.com/ggreer/the_silver_searcher/
+    silver-searcher
     dmenu # app launcher
     
     htop # process monitor
@@ -72,6 +72,12 @@ in
     xfce.thunar # graphical file manager
     libreoffice
     dzen2 # for displaying volume
+    hledger # accounting
+
+    # haskell development
+    cabal2nix
+    cabal-install
+    nix-prefetch-git
   ];
   services.tumbler.enable = true; # thumbnail support for images in thunar
 }

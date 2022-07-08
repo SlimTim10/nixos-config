@@ -128,6 +128,9 @@ in
     ACTION=="add", SUBSYSTEMS=="usb", SUBSYSTEM=="block", ENV{ID_FS_USAGE}=="filesystem", RUN{program}+="${pkgs.systemd}/bin/systemd-mount --no-block --automount=yes --collect $devnode /media"       
   '';
 
+  # Support NTFS
+  boot.supportedFilesystems = [ "ntfs" ];
+
   # Enable PostgreSQL
   services.postgresql = {
     enable = true;

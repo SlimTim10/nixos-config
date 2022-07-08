@@ -1,6 +1,11 @@
 * nixos-config
 
+** During NixOS installation
+
+Use ~initial_configuration.nix~ as configuration.nix during install (enables networking and sets up basic user).
+
 ** From new NixOS installation
+How to login to GitHub? Using "gh" is an option. HTTPS better than SSH?
 #+begin_src sh
 $ git clone git@github.com:SlimTim10/nixos-config.git /home/tim/.nix-config
 $ git clone git@github.com:SlimTim10/emacs-home.git /home/tim/emacs-home
@@ -13,9 +18,9 @@ $ ./nixos-rebuild.sh
 #+begin_src sh
 $ sudo fdisk -l # find the drive
 $ sudo mkdir -p /mnt/external-hdd
-$ sudo mount -t ntfs -o umask=000 /dev/sdb1 /mnt/external-hdd # for NTFS-formatted drive, full R/W permission
+$ sudo mount -t ntfs -o umask=000 /dev/sda1 /mnt/external-hdd # for NTFS-formatted drive, full R/W permission (-o umask=000 may not be needed since adding support for NTFS)
 $ sudo mkdir -p /mnt/external-ssd
-$ sudo mount -t ntfs -o umask=000 /dev/sda2 /mnt/external-ssd
+$ sudo mount -t ntfs -o umask=000 /dev/sdb2 /mnt/external-ssd
 $ sudo nixos-generate-config # updates /etc/nixos/hardware-configuration.nix
 #+end_src
 
@@ -35,3 +40,61 @@ $ nix-collect-garbage -d
 More info
 - https://nixos.wiki/wiki/Storage_optimization
 - https://nixos.org/manual/nix/stable/#sec-garbage-collection
+
+** File organization
+
+General configuration is in ~configuration.nix~.
+
+...
+
+** Installing and removing packages (programs)
+
+https://search.nixos.org/packages
+
+3 different ways:
+
+1. Permanent
+   Add to packages.nix
+
+2. Ephemeral
+   [tim@nixos:~]$ nix-shell -p tty-solitaire
+   [nix-shell:~]$ ttysolitaire
+   [nix-shell:~]$ exit
+   [tim@nixos:~]$ nix-collect-garbage
+
+3. Global
+(DON'T USE THIS)
+nix-env -iA nixos.tty-solitaire
+Deleting:
+nix-store --query --roots /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1.drv
+sudo nix store delete /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1
+
+** Navigation
+
+...
+
+** Networking
+
+Use nmtui (or nmcli) from command line
+
+** Android file transfer
+
+Use ~jmtpfs~ to mount the device, then use ~rsync~ as root.
+
+#+begin_src
+$ nix-shell -p jmtpfs
+$ sudo jmtpfs /media
+$ su
+# cd "/media/Internal shared storage/DCIM/Camera"
+# rsync -avhP --ignore-existing VID_2022* /mnt/external-hdd/Photos\ and\ Videos/2022/misc/
+#+end_src
+
+See https://nixos.wiki/wiki/MTP.
+
+** Backup files
+
+Sync drives, deleting files in destination that are not in source.
+
+#+begin_src
+$ rsync -avhP --delete /mnt/external-hdd/ /media/
+#+end_src

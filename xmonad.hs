@@ -55,6 +55,11 @@ main = do
       , ("M-/", CycleWS.toggleWS)
       , ("M-<Right>", CycleWS.nextWS)
       , ("M-<Left>", CycleWS.prevWS)
+      -- Need XMonad 0.17.0 for JumpToLayout
+      -- , ("M-<Up>", sendMessage $ X.JumpToLayout "Full")
+      -- , ("M-<Right>", sendMessage $ X.JumpToLayout "TwoPane")
+      -- , ("M-<Down>", sendMessage $ X.JumpToLayout "Tall")
+      -- , ("M-<Left>", sendMessage $ X.JumpToLayout "Mirror Tall")
       , ("<XF86AudioMute>", Vol.toggleMute >>= (B.bool (showVolume "mute") (showVolume "unmute")))
       , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showVolume . show . round)
       , ("<XF86AudioRaiseVolume>", Vol.raiseVolume 5 >>= showVolume . show . round)
