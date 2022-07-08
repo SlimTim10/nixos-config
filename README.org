@@ -1,6 +1,11 @@
 * nixos-config
 
+** During NixOS installation
+
+Use ~initial_configuration.nix~ as configuration.nix during install (enables networking and sets up basic user).
+
 ** From new NixOS installation
+How to login to GitHub? Using "gh" is an option. HTTPS better than SSH?
 #+begin_src sh
 $ git clone git@github.com:SlimTim10/nixos-config.git /home/tim/.nix-config
 $ git clone git@github.com:SlimTim10/emacs-home.git /home/tim/emacs-home
