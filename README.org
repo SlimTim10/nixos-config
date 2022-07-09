@@ -2,7 +2,11 @@
 
 ** During NixOS installation
 
-Use ~initial_configuration.nix~ as configuration.nix during install (enables networking and sets up basic user).
+Before ~nixos-install~, use ~initial_configuration.nix~ as configuration.nix (enables networking and sets up basic user). After ~nixos-install~, set a password for user ~tim~:
+
+#+begin_src sh
+$ passwd tim
+#+end_src
 
 ** From new NixOS installation
 How to login to GitHub? Using "gh" is an option. HTTPS better than SSH?
