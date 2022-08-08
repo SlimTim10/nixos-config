@@ -156,14 +156,6 @@ in
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
   };
 
-  # Binary Cache for Haskell.nix  
-  nix.binaryCachePublicKeys = [
-    "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
-  ];
-  nix.binaryCaches = [
-    "https://cache.iog.io"
-  ];
-
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
