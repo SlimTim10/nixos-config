@@ -20,10 +20,16 @@ Config
         , "--normal"   , "darkorange"
         , "--high"     , "darkred"
         ] 10
+    , Run Battery [
+        "-t"
+        , "Batt: <left>% (<acstatus>)"
+        , "-L", "10", "-H", "80"
+        , "-l", "red", "-n", "blue", "-h", "green"
+        ] 10
     , Run StdinReader
     ]
   -- layout
   , sepChar =  "%"   -- delineator between plugin names and straight text
   , alignSep = "}{"  -- separator between left-right alignment
-  , template = "%StdinReader% }{ %dynnetwork% | %cpu% | %memory% * %swap% | %CYYZ% <fc=#ee9a00>%date%</fc>"
+  , template = "%StdinReader% }{ %dynnetwork% | %battery% | %cpu% | %memory% * %swap% | %CYYZ% <fc=#ee9a00>%date%</fc>"
 }
