@@ -87,9 +87,10 @@ Use ~jmtpfs~ to mount the device, then use ~rsync~ as root.
 
 #+begin_src
 $ nix-shell -p jmtpfs
-$ sudo jmtpfs /media
 $ su
+# jmtpfs /media
 # cd "/media/Internal shared storage/DCIM/Camera"
+# rsync -avhP --ignore-existing IMG_2022* /mnt/external-hdd/Photos\ and\ Videos/2022/misc/
 # rsync -avhP --ignore-existing VID_2022* /mnt/external-hdd/Photos\ and\ Videos/2022/misc/
 #+end_src
 
