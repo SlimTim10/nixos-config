@@ -78,6 +78,10 @@ in
     cabal2nix
     cabal-install
     nix-prefetch-git
+
+    # agda
+    ghc
+    zlib
   ];
   services.tumbler.enable = true; # thumbnail support for images in thunar
 }
