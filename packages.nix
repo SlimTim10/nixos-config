@@ -67,7 +67,8 @@ in
     slack # HiDPI resolution fix: --force-device-scale-factor=1.5
     mpv # video player
     nodejs
-    qbittorrent
+    qbittorrent # torrent client
+    deluge # torrent client
     xmobar
     xfce.thunar # graphical file manager
     libreoffice
