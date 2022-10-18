@@ -48,19 +48,19 @@ in
     
     vim
     wget
-    silver-searcher
+    silver-searcher # ag (grep alternative)
     dmenu # app launcher
     
     htop # process monitor
-    process-monitor
+    process-monitor # better visual process monitor
     
     xclip # clipboard help
     keepassxc # password manager
     thunderbird # email
-    firefox
-    weather-forecast
-    restart-dropbox
-    google-chrome
+    firefox # main web browser
+    weather-forecast # shortcut for weather page
+    restart-dropbox # necessary because dropbox linux is buggy
+    google-chrome # for dev work
     zoom-us # video meetings
     hardinfo # hardware info GUI
     pavucontrol # audio controls GUI
@@ -69,7 +69,7 @@ in
     nodejs
     qbittorrent # torrent client
     deluge # torrent client
-    xmobar
+    xmobar # status bar for xmonad
     xfce.thunar # graphical file manager
     libreoffice
     dzen2 # for displaying volume
