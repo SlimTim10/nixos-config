@@ -1,6 +1,10 @@
 { config, pkgs, ... }:
 
 let
+  # sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
+  # sudo nix-channel --update
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  
   hibernate = pkgs.writeShellScriptBin "hibernate" ''
     dm-tool lock
     systemctl hibernate
@@ -61,7 +65,7 @@ in
     weather-forecast # shortcut for weather page
     restart-dropbox # necessary because dropbox linux is buggy
     google-chrome # for dev work
-    zoom-us # video meetings
+    unstable.zoom-us # video meetings
     hardinfo # hardware info GUI
     pavucontrol # audio controls GUI
     slack # HiDPI resolution fix: --force-device-scale-factor=1.5
