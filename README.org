@@ -102,12 +102,12 @@ Sync drives, deleting files in destination that are not in source.
 
 #+begin_src
 $ sudo mount /dev/sdc1 /media/
-$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/ /media/data/
 $ git clone git@github.com:SlimTim10/nixos-config.git /media/.nix-config
 $ cd /media/.nix-config
 $ git pull
 $ git clone git@github.com:SlimTim10/emacs-home.git /media/emacs-home
 $ cd /media/emacs-home
 $ git pull
+$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/ /media/data/
 $ sudo rsync -avhPW --delete --compress-level=0 /home/tim/Dropbox/ /mnt/external-ssd/Dropbox/
 #+end_src
