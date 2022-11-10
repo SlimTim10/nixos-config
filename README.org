@@ -86,8 +86,8 @@ Use nmtui (or nmcli) from command line
 Use ~jmtpfs~ to mount the device, then use ~rsync~ as root.
 
 #+begin_src
-$ nix-shell -p jmtpfs
 $ su
+# nix-shell -p jmtpfs
 # jmtpfs /media
 # cd "/media/Internal shared storage/DCIM/Camera"
 # rsync -avhP --ignore-existing IMG_2022* /mnt/external-hdd/Photos\ and\ Videos/2022/misc/
@@ -101,6 +101,7 @@ See https://nixos.wiki/wiki/MTP.
 Sync drives, deleting files in destination that are not in source.
 
 #+begin_src
+$ sudo mount /dev/sdc1 /media/
 $ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/ /media/data/
 $ git clone git@github.com:SlimTim10/nixos-config.git /media/.nix-config
 $ cd /media/.nix-config
