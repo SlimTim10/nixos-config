@@ -53,6 +53,7 @@ main = do
       , ("M-S--", DW.renameWorkspace X.def)
       -- Go back to most recent workspace
       , ("M-/", CycleWS.toggleWS)
+      , ("M-z", CycleWS.toggleWS)
       , ("M-<Right>", CycleWS.nextWS)
       , ("M-<Left>", CycleWS.prevWS)
       -- Need XMonad 0.17.0 for JumpToLayout
