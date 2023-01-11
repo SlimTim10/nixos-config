@@ -22,7 +22,7 @@ $ ./nixos-rebuild.sh
 #+begin_src sh
 $ sudo fdisk -l # find the drive
 $ sudo mkdir -p /mnt/external-hdd
-$ sudo mount /mnt/external-hdd
+$ sudo mount /dev/sdx1 /mnt/external-hdd # replace sdx1 with the found drive
 $ sudo mount -t ntfs -o umask=000 /dev/sdx1 /mnt/external-hdd # for NTFS-formatted drive, full R/W permission (-o umask=000 may not be needed since adding support for NTFS)
 $ sudo nixos-generate-config # updates /etc/nixos/hardware-configuration.nix
 #+end_src
