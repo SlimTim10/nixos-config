@@ -22,9 +22,8 @@ $ ./nixos-rebuild.sh
 #+begin_src sh
 $ sudo fdisk -l # find the drive
 $ sudo mkdir -p /mnt/external-hdd
-$ sudo mount -t ntfs -o umask=000 /dev/sda1 /mnt/external-hdd # for NTFS-formatted drive, full R/W permission (-o umask=000 may not be needed since adding support for NTFS)
-$ sudo mkdir -p /mnt/external-ssd
-$ sudo mount -t ntfs -o umask=000 /dev/sdb2 /mnt/external-ssd
+$ sudo mount /mnt/external-hdd
+$ sudo mount -t ntfs -o umask=000 /dev/sdx1 /mnt/external-hdd # for NTFS-formatted drive, full R/W permission (-o umask=000 may not be needed since adding support for NTFS)
 $ sudo nixos-generate-config # updates /etc/nixos/hardware-configuration.nix
 #+end_src
 
@@ -90,8 +89,8 @@ $ su
 # nix-shell -p jmtpfs
 # jmtpfs /media
 # cd "/media/Internal shared storage/DCIM/Camera"
-# rsync -avhP --ignore-existing IMG_2022* /mnt/external-hdd/Photos\ and\ Videos/2022/misc/
-# rsync -avhP --ignore-existing VID_2022* /mnt/external-hdd/Photos\ and\ Videos/2022/misc/
+# rsync -avhP --ignore-existing IMG_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
+# rsync -avhP --ignore-existing VID_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
 #+end_src
 
 See https://nixos.wiki/wiki/MTP.
@@ -101,14 +100,13 @@ See https://nixos.wiki/wiki/MTP.
 Sync drives, deleting files in destination that are not in source.
 
 #+begin_src
-$ sudo mount /dev/sdc1 /media/
+$ sudo fdisk -l
+$ sudo mount /dev/sdx1 /media/
 $ git clone git@github.com:SlimTim10/nixos-config.git /media/.nix-config
 $ cd /media/.nix-config
 $ git pull
 $ git clone git@github.com:SlimTim10/emacs-home.git /media/emacs-home
 $ cd /media/emacs-home
 $ git pull
-$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/ /media/data/
-$ rsync -avhPW --delete --compress-level=0 /home/tim/Dropbox/ /media/Dropbox/
-$ sudo rsync -avhPW --delete --compress-level=0 /home/tim/Dropbox/ /mnt/external-ssd/Dropbox/
+$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/ /media/
 #+end_src
