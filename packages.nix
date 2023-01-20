@@ -9,22 +9,31 @@ let
     dm-tool lock
     systemctl hibernate
   '';
+  
   lock-screen = pkgs.writeShellScriptBin "lock-screen" ''
     dm-tool lock
   '';
+  
   # For launching process monitor from dmenu
   process-monitor = pkgs.writeShellScriptBin "process-monitor" ''
     xterm -e htop
   '';
+  
   # Launch firefox with Toronto weather forecast
   weather-forecast = pkgs.writeShellScriptBin "weather-forecast" ''
     firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
   '';
+  
   # Restart dropbox
   restart-dropbox = pkgs.writeShellScriptBin "restart-dropbox" ''
     dropbox stop
     sleep 5
     dropbox start
+  '';
+  
+  # Take a screenshot (interactive selection) and copy the selection to the clipboard
+  screenshot = pkgs.writeShellScriptBin "screenshot" ''
+    maim -s | xclip -selection clipboard -t image/png
   '';
 in
 {
@@ -78,6 +87,9 @@ in
     libreoffice
     dzen2 # for displaying volume
     hledger # accounting
+    
+    maim # screenshot utility
+    screenshot # uses maim (bind to PrtSc key)
 
     # haskell development
     cabal2nix

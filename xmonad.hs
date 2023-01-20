@@ -64,6 +64,7 @@ main = do
       , ("<XF86AudioMute>", Vol.toggleMute >>= (B.bool (showVolume "mute") (showVolume "unmute")))
       , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showVolume . show . round)
       , ("<XF86AudioRaiseVolume>", Vol.raiseVolume 5 >>= showVolume . show . round)
+      , ("<Print>", X.spawn "screenshot")
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
