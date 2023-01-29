@@ -19,6 +19,11 @@ let
     xterm -e htop
   '';
   
+  # For launching nmtui (network manager) from dmenu (aliased as "wifi" for easier remembrance)
+  wifi = pkgs.writeShellScriptBin "wifi" ''
+    xterm -e nmtui
+  '';
+  
   # Launch firefox with Toronto weather forecast
   weather-forecast = pkgs.writeShellScriptBin "weather-forecast" ''
     firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
@@ -66,6 +71,7 @@ in
     
     htop # process monitor
     process-monitor # better visual process monitor
+    wifi # my alias for nmtui
     
     xclip # clipboard help
     keepassxc # password manager
