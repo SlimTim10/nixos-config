@@ -143,6 +143,11 @@ in
     '';
   };
 
+  # Don't shutdown on power button press
+  services.logind.extraConfig = ''
+    HandlePowerKey=ignore
+  '';
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
     isNormalUser = true;
