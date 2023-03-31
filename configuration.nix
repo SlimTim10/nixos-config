@@ -83,7 +83,7 @@ in
   };
 
   # Save space via hardlinking store files (recommended for SSDs)
-  nix.autoOptimiseStore = true;
+  nix.settings.auto-optimise-store = true;
 
   # Set your time zone.
   time.timeZone = "America/Toronto";

@@ -50,8 +50,8 @@ in
     ];
 
   # For Haskell Reflex FRP
-  nix.binaryCaches = [ "https://nixcache.reflex-frp.org" ];
-  nix.binaryCachePublicKeys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
+  nix.settings.substituters = [ "https://nixcache.reflex-frp.org" ];
+  nix.settings.trusted-public-keys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
   
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -83,7 +83,7 @@ in
     unstable.zoom-us # video meetings
     hardinfo # hardware info GUI
     pavucontrol # audio controls GUI
-    slack # HiDPI resolution fix: --force-device-scale-factor=1.5
+    unstable.slack # HiDPI resolution fix: --force-device-scale-factor=1.5
     mpv # video player
     nodejs
     qbittorrent # torrent client
