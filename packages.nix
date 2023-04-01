@@ -85,6 +85,7 @@ in
     pavucontrol # audio controls GUI
     unstable.slack # HiDPI resolution fix: --force-device-scale-factor=1.5
     mpv # video player
+    vlc # video player
     nodejs
     qbittorrent # torrent client
     deluge # torrent client
