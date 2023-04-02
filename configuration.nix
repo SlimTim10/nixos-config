@@ -156,7 +156,9 @@ in
   };
 
   xdg.mime.defaultApplications = {
-    "video/mp4" = "mpv.desktop";
+    "video/mp4" = "vlc.desktop";
+    "video/webm" = "vlc.desktop";
+    "video/x-matroska" = "vlc.desktop";
     "application/pdf" = "firefox.desktop";
     "x-scheme-handler/mailto" = "thunderbird.desktop";
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
