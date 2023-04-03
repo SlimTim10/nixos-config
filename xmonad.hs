@@ -27,7 +27,7 @@ main = do
     , X.focusedBorderColor = "red"
     , X.normalBorderColor = "black"
     , X.workspaces = workspaces
-    , X.manageHook = myManageHook <+> X.manageHook X.defaultConfig
+    , X.manageHook = myManageHook <+> X.manageHook X.def
     }
     `EZConfig.removeKeysP`
     [ "M-S-/"
