@@ -1,5 +1,5 @@
 Config
-  { font =         "xft:Bitstream Vera Sans Mono:size=12:bold:antialias=true"
+  { font =         "DejaVu Sans Mono Bold 14"
   , bgColor =      "black"
   , fgColor =      "#646464"
   , position =     Top
