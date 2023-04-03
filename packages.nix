@@ -6,12 +6,12 @@ let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   
   hibernate = pkgs.writeShellScriptBin "hibernate" ''
-    dm-tool lock
+    slock
     systemctl hibernate
   '';
   
   lock-screen = pkgs.writeShellScriptBin "lock-screen" ''
-    dm-tool lock
+    slock
   '';
   
   # For launching process monitor from dmenu
