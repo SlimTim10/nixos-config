@@ -6,7 +6,6 @@ let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
   
   hibernate = pkgs.writeShellScriptBin "hibernate" ''
-    slock
     systemctl hibernate
   '';
   
