@@ -108,5 +108,7 @@ $ git pull
 $ git clone git@github.com:SlimTim10/emacs-home.git /media/emacs-home
 $ cd /media/emacs-home
 $ git pull
-$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/ /media/
+$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/data/ /media/data/
+$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/Dropbox/ /media/Dropbox/
+$ rsync -avhPW --delete --compress-level=0 '/mnt/external-hdd/Zoom Recordings Archive/' '/media/Zoom Recordings Archive/'
 #+end_src
