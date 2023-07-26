@@ -93,6 +93,7 @@ in
     libreoffice
     dzen2 # for displaying volume
     hledger # accounting
+    qdirstat # visual disk space analyzer
     
     maim # screenshot utility
     screenshot # uses maim (bind to PrtSc key)
