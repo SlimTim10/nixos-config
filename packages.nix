@@ -34,6 +34,20 @@ let
     sleep 5
     dropbox start
   '';
+
+  # Dropbox status for xmobar
+  xmobar-dropbox-status = pkgs.writeShellScriptBin "xmobar-dropbox-status" ''
+    status="$(dropbox status)"
+
+    case "$status" in
+      "Up to date")
+        echo "Up to date" ;;
+      Syncing*)
+        echo "Syncing..." ;;
+      *)
+        echo "Dropbox: $status" ;;
+    esac
+  '';
   
   # Take a screenshot (interactive selection) and copy the selection to the clipboard
   screenshot = pkgs.writeShellScriptBin "screenshot" ''
@@ -72,6 +86,9 @@ in
     process-monitor # better visual process monitor
     wifi # my alias for nmtui
     
+    xmobar # status bar for xmonad
+    xmobar-dropbox-status
+    
     xclip # clipboard help
     keepassxc # password manager
     thunderbird # email
@@ -87,8 +104,7 @@ in
     vlc # video player
     nodejs
     qbittorrent # torrent client
-    deluge # torrent client
-    xmobar # status bar for xmonad
+    deluge # torrent client    
     xfce.thunar # graphical file manager
     libreoffice
     dzen2 # for displaying volume
