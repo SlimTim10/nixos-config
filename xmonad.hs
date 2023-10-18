@@ -12,6 +12,7 @@ import qualified XMonad.Actions.CycleWS as CycleWS
 import qualified XMonad.Layout.TwoPane as TwoPane
 import qualified XMonad.Actions.Volume as Vol
 import qualified XMonad.Util.Dzen as Dzen -- display volume
+import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -20,7 +21,7 @@ import Control.Monad ((>=>))
 
 main :: IO ()
 main = do
-  xmobar <- DynamicLog.xmobar $ X.def
+  xmobar <- DynamicLog.xmobar $ Ewmh.ewmh $ X.def
     { X.modMask = X.mod4Mask
     , X.layoutHook = myLayout
     , X.borderWidth = 8
@@ -28,6 +29,7 @@ main = do
     , X.normalBorderColor = "black"
     , X.workspaces = workspaces
     , X.manageHook = myManageHook <+> X.manageHook X.def
+    , X.clickJustFocuses = False
     }
     `EZConfig.removeKeysP`
     [ "M-S-/"
