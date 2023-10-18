@@ -53,6 +53,12 @@ let
   screenshot = pkgs.writeShellScriptBin "screenshot" ''
     maim -s | xclip -selection clipboard -t image/png
   '';
+
+  haskell-invoice = (import (builtins.fetchGit {
+    name = "haskell-invoice";
+    url = "https://github.com/SlimTim10/haskell-invoice/";
+  }));
+
 in
 {
   imports =
@@ -122,6 +128,9 @@ in
     # agda
     ghc
     zlib
+
+    # packages I created
+    haskell-invoice
   ];
   services.tumbler.enable = true; # thumbnail support for images in thunar
 }
