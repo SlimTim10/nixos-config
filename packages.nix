@@ -37,16 +37,8 @@ let
 
   # Dropbox status for xmobar
   xmobar-dropbox-status = pkgs.writeShellScriptBin "xmobar-dropbox-status" ''
-    status="$(dropbox status)"
-
-    case "$status" in
-      "Up to date")
-        echo "Up to date" ;;
-      Syncing*)
-        echo "Syncing..." ;;
-      *)
-        echo "Dropbox: $status" ;;
-    esac
+    status="$(maestral status | ag -o --nocolor '^Status\s+\K(\S+(?:\s\S+)*)')"
+    echo "Dropbox: $status"
   '';
   
   # Take a screenshot (interactive selection) and copy the selection to the clipboard
@@ -63,7 +55,6 @@ in
 {
   imports =
     [
-      ./packages/dropbox.nix
       ./packages/spotify.nix
       ./packages/steam.nix
     ];
@@ -116,6 +107,7 @@ in
     dzen2 # for displaying volume
     hledger # accounting
     qdirstat # visual disk space analyzer
+    maestral # open source Dropbox client
     
     maim # screenshot utility
     screenshot # uses maim (bind to PrtSc key)
