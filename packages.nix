@@ -37,7 +37,7 @@ let
 
   # Dropbox status for xmobar
   xmobar-dropbox-status = pkgs.writeShellScriptBin "xmobar-dropbox-status" ''
-    status="$(maestral status | ag -o --nocolor '^Status\s+\K(\S+(?:\s\S+)*)')"
+    status="$(maestral status | ag -o --nocolor '^Status\s+\K((?:.*)*\S)')"
     echo "Dropbox: $status"
   '';
   
