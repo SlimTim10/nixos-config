@@ -124,10 +124,10 @@ in
     cabal2nix
     cabal-install
     nix-prefetch-git
+    ghc
 
     # agda
-    ghc
-    zlib
+    agda
 
     # packages I created
     haskell-invoice
