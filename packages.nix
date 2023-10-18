@@ -28,13 +28,6 @@ let
     firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
   '';
   
-  # Restart dropbox
-  restart-dropbox = pkgs.writeShellScriptBin "restart-dropbox" ''
-    dropbox stop
-    sleep 5
-    dropbox start
-  '';
-
   # Dropbox status for xmobar
   xmobar-dropbox-status = pkgs.writeShellScriptBin "xmobar-dropbox-status" ''
     status="$(maestral status | ag -o --nocolor '^Status\s+\K((?:.*)*\S)')"
@@ -91,7 +84,6 @@ in
     thunderbird # email
     firefox # main web browser
     weather-forecast # shortcut for weather page
-    restart-dropbox # necessary because dropbox linux is buggy
     google-chrome # for dev work
     unstable.zoom-us # video meetings
     hardinfo # hardware info GUI
