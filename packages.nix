@@ -100,6 +100,7 @@ in
     hledger # accounting
     qdirstat # visual disk space analyzer
     maestral # open source Dropbox client
+    freetube # open source YouTube client
     
     maim # screenshot utility
     screenshot # uses maim (bind to PrtSc key)
