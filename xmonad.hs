@@ -36,6 +36,8 @@ main = do
     ]
     `EZConfig.additionalKeysP`
     ( [ ("M-x", X.spawn "lock-screen")
+      -- Change to full screen layout
+      , ("M-f", X.sendMessage $ X.JumpToLayout "Full")
       -- Go to window by name search
       , ("M-s", PromptW.windowPrompt promptDef PromptW.Goto PromptW.allWindows)
       -- Bring window by name search
@@ -99,8 +101,6 @@ myFuzzyFinder a b = map C.toLower a `L.isInfixOf` map C.toLower b
 myManageHook = X.composeAll
   [ X.className =? "Thunderbird" --> X.doShift "2:web"
   , X.className =? "Slack" --> X.doShift "2:web"
-  , X.className =? "qBittorrent" --> X.doShift "3:media"
-  , X.className =? "Spotify" --> X.doShift "3:media"
   , X.className =? "zoom" --> X.doShift "4:meeting"
   , X.title =? "zoom"  --> X.doFloat
   ]
