@@ -98,6 +98,7 @@ in
     libreoffice
     dzen2 # for displaying volume
     hledger # accounting
+    hledger-web # accounting (web UI)
     qdirstat # visual disk space analyzer
     maestral # open source Dropbox client
     freetube # open source YouTube client
