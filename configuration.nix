@@ -154,7 +154,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" "docker" ];
     home = "/home/tim";
   };
 
@@ -166,6 +166,9 @@ in
     "x-scheme-handler/mailto" = "thunderbird.desktop";
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
   };
+
+  # Docker
+  virtualisation.docker.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
