@@ -39,9 +39,9 @@ let
     maim -s | xclip -selection clipboard -t image/png
   '';
 
-  haskell-invoice = (import (builtins.fetchGit {
-    name = "haskell-invoice";
-    url = "https://github.com/SlimTim10/haskell-invoice/";
+  easy-invoice-maker = (import (builtins.fetchGit {
+    name = "easy-invoice-maker";
+    url = "https://github.com/SlimTim10/easy-invoice-maker/";
   }));
 
 in
@@ -116,7 +116,7 @@ in
     agda
 
     # packages I created
-    haskell-invoice
+    easy-invoice-maker
   ];
   services.tumbler.enable = true; # thumbnail support for images in thunar
 }
