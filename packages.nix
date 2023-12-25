@@ -4,6 +4,8 @@ let
   # sudo nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
   # sudo nix-channel --update
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+
+  secrets = import ./secrets.nix;
   
   hibernate = pkgs.writeShellScriptBin "hibernate" ''
     systemctl hibernate
@@ -28,10 +30,10 @@ let
     firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
   '';
   
-  # Dropbox status for xmobar
-  xmobar-dropbox-status = pkgs.writeShellScriptBin "xmobar-dropbox-status" ''
-    status="$(maestral status | ag -o --nocolor '^Status\s+\K((?:.*)*\S)')"
-    echo "Dropbox: $status"
+  # Syncthing status for xmobar
+  xmobar-syncthing-status = pkgs.writeShellScriptBin "xmobar-syncthing-status" ''
+    status="$(curl --silent -X GET -H "X-API-Key: ${secrets.syncthing.apiKey}" http://localhost:8384/rest/db/status?folder=Sync | jq -r '.state')"
+    echo "Syncthing: $status"
   '';
   
   # Take a screenshot (interactive selection) and copy the selection to the clipboard
@@ -77,7 +79,6 @@ in
     wifi # my alias for nmtui
     
     xmobar # status bar for xmonad
-    xmobar-dropbox-status
     
     xclip # clipboard help
     keepassxc # password manager
@@ -100,8 +101,12 @@ in
     hledger # accounting
     hledger-web # accounting (web UI)
     qdirstat # visual disk space analyzer
-    maestral # open source Dropbox client
     freetube # open source YouTube client
+
+    jq # command-line JSON processor
+    xmobar-syncthing-status # uses jq
+
+    megasync # MEGA cloud storage
     
     maim # screenshot utility
     screenshot # uses maim (bind to PrtSc key)

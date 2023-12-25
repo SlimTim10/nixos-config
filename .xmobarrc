@@ -27,10 +27,10 @@ Config
         , "-l", "red", "-n", "blue", "-h", "green"
         ] 10
     , Run StdinReader
-    , Run Com "xmobar-dropbox-status" [] "dropbox" 10
+    , Run Com "xmobar-syncthing-status" [] "syncthing" 10
     ]
   -- layout
   , sepChar =  "%"   -- delineator between plugin names and straight text
   , alignSep = "}{"  -- separator between left-right alignment
-  , template = "%StdinReader% }{ %dropbox% | %dynnetwork% | %battery% | %cpu% | %memory% * %swap% | %CYYZ% <fc=#ee9a00>%date%</fc>"
+  , template = "%StdinReader% }{ %syncthing% | %dynnetwork% | %battery% | %cpu% | %memory% * %swap% | %CYYZ% <fc=#ee9a00>%date%</fc>"
 }
