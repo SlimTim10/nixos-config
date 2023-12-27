@@ -29,6 +29,9 @@ in
       # ./xfce.nix
     ];
 
+  # Enables flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   nixpkgs.config.allowUnfree = true;
 
   # Run scripts at startup
@@ -73,14 +76,6 @@ in
   #  };
   #};
   networking.networkmanager.enable = true;
-
-  # Enables flakes
-  nix = {
-    package = pkgs.nixFlakes;
-    extraOptions = ''
-      experimental-features = nix-command flakes
-    '';
-  };
 
   # Save space via hardlinking store files (recommended for SSDs)
   nix.settings.auto-optimise-store = true;
