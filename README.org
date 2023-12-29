@@ -1,6 +1,36 @@
 * nixos-config
 
-** During NixOS installation
+** XMonad Cheatsheet
+
+Keys:
+- M1 = Windows key
+- M = Alt
+- C = Ctrl
+- S = Shift
+
+| Key             | Action                     | Program(s)           |
+|-----------------+----------------------------+----------------------|
+| M1-p            | Launch dmenu (run program) | XMonad               |
+| M1-x            | Lock screen                | XMonad / lock-screen |
+| M1-space        | Rotate window layout       | XMonad               |
+| M1-b            | Toggle xmobar              | XMonad               |
+| M1-f            | Full screen layout         | XMonad               |
+| M1-o / M1-j     | Focus next window          | XMonad               |
+| M1-S-o / M1-k   | Focus prev window          | XMonad               |
+| M1-S-j / M1-S-k | Shift window               | XMonad               |
+| M1-h / M1-l     | Resize window              | XMonad               |
+| M1-s            | Search window              | XMonad               |
+| M1-[1..9]       | Select workspace           | XMonad               |
+| M1-=            | Select/create workspace    | XMonad               |
+| M1-S-=          | Move window to workspace   | XMonad               |
+| M1-S-[1..9]     | Move window to workspace   | XMonad               |
+| M1-z / M1-/     | Select prev workspace      | XMonad               |
+| M1-C-M--        | Delete workspace           | XMonad               |
+| M1-e            | Focus Emacs                | XMonad               |
+
+** Installation
+
+*** During NixOS installation
 
 Before ~nixos-install~, use ~initial_configuration.nix~ as configuration.nix (enables networking and sets up basic user). After ~nixos-install~, set a password for user ~tim~:
 
@@ -8,7 +38,7 @@ Before ~nixos-install~, use ~initial_configuration.nix~ as configuration.nix (en
 $ passwd tim
 #+end_src
 
-** From new NixOS installation
+*** From new NixOS installation
 How to login to GitHub? Using "gh" is an option. HTTPS better than SSH?
 #+begin_src sh
 $ git clone git@github.com:SlimTim10/nixos-config.git /home/tim/.nix-config
@@ -109,7 +139,74 @@ $ git pull
 $ git clone git@github.com:SlimTim10/emacs-home.git /media/emacs-home
 $ cd /media/emacs-home
 $ git pull
+$ rsync -avhPW --delete --compress-level=0 /home/tim/Sync/ /mnt/external-hdd/data/Backups/Sync/
 $ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/data/ /media/data/
-$ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/Dropbox/ /media/Dropbox/
 $ rsync -avhPW --delete --compress-level=0 '/mnt/external-hdd/Zoom Recordings Archive/' '/media/Zoom Recordings Archive/'
+#+end_src
+
+** Secrets management
+
+Uses [[https://github.com/ryantm/agenix][agenix]] CLI tool with the ~./secrets/secrets.nix~ file.
+
+*** Example: Syncthing API key
+
+1. Create a secret file:
+   
+   #+begin_src
+   $ cd secrets
+   $ agenix -e syncthingApiKey.age
+   #+end_src
+   
+   It will open a temporary file in the app configured in your $EDITOR environment variable. When you save that file its content will be encrypted with all the public keys mentioned in the ~./secrets/secrets.nix~ file.
+
+2. Add public keys to ~./secrets/secrets.nix~:
+
+   #+begin_src nix
+   let
+     desktop = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMaUtCUyfQHn+qJvmr8nf0v83WwpOgBoNyqma71DsWR4 slimtim10@gmail.com";
+   in {
+     "syncthingApiKey.age".publicKeys = [ desktop ];
+   }
+   #+end_src
+
+3. Add to ~./systems/desktop/services.nix~:
+
+   #+begin_src nix
+   age.secrets."syncthingApiKey" = {
+     file = ../../secrets/syncthingApiKey.age;
+     mode = "700";
+     owner = "tim";
+     group = "users";
+   };
+   #+end_src
+
+4. Reference the secret's path:
+
+   Outside home manager:
+
+   #+begin_src nix
+   syncthingApiKey = "$(cat ${config.age.secrets."syncthingApiKey".path})";
+   #+end_src
+
+   Within home manager:
+
+   #+begin_src nix
+   {
+     # ...
+     osConfig,
+     # ...
+   }:
+   let
+     syncthingApiKey = "$(cat ${osConfig.age.secrets."syncthingApiKey".path})";
+   # ...
+   #+end_src
+
+** Troubleshooting
+
+*** If XMonad fails to start or recompile, try using a shell that has the required dependencies:
+
+#+begin_src
+$ nix-shell -p "ghc.withPackages (pkgs: with pkgs; [ xmonad xmonad-extras xmonad-contrib ])"
+$ xmonad --recompile
+$ xmonad --restart
 #+end_src

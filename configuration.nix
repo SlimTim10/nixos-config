@@ -1,65 +1,15 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
+{ config, lib, pkgs, ... }:
 
-{ config, pkgs, ... }:
-
-let
-  myCustomLayout = pkgs.writeText "xkb-layout" ''
-    ! Swap ctrl and alt, and map capslock to alt
-    clear lock
-    clear control
-    clear mod1
-    keycode 66 = Alt_L
-    keycode 37 = Alt_L Meta_L
-    keycode 105 = Alt_R Meta_R
-    keycode 64 = Control_L
-    keycode 108 = Control_R
-    add control = Control_L Control_R
-    add mod1 = Alt_L Meta_L
-  '';
-in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-      ./hardware.nix
-      ./packages.nix
-      ./xmonad.nix
-      # ./xfce.nix
-    ];
+  imports = [
+    ./core-packages.nix
+    # ./xfce.nix
+  ];
 
   # Enables flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  nixpkgs.config.allowUnfree = true;
-
-  # Run scripts at startup
-  system.activationScripts = {
-    linkXmonadConfig = ''
-      mkdir -p /home/tim/.xmonad
-      ln -sf /home/tim/.nix-config/xmonad.hs /home/tim/.xmonad/xmonad.hs
-    '';
-    linkXmobarConfig = ''
-      ln -sf /home/tim/.nix-config/.xmobarrc /home/tim/.xmobarrc
-    '';
-    linkEmacsConfig = ''
-      ln -sf /home/tim/emacs-home/.emacs.d/ /home/tim/.emacs.d
-      ln -sf /home/tim/emacs-home/.emacs /home/tim/.emacs
-    '';
-    linkMpvConfig = ''
-      mkdir -p /home/tim/.config
-      ln -sf /home/tim/.nix-config/mpv/ /home/tim/.config/mpv
-    '';
-    linkXresources = ''
-      ln -sf /home/tim/.nix-config/.Xresources /home/tim/.Xresources
-    '';
-  };
-
-  environment.interactiveShellInit = ''
-    alias pbcopy='xclip -selection clipboard'
-    alias cp='rsync -avhP'
-  '';
+  nixpkgs.config.allowUnfree = lib.mkForce true;
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
@@ -104,9 +54,6 @@ in
   # TODO: make automatic (4K monitor resolution needs DPI scaling)
   # xrandr -s 3840x2160 --output HDMI-A-0 --scale-from 1440x900
   # services.xserver.resolutions = [ { x = 1440; y = 900; } ];
-
-  # Use my keymap
-  services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
       
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -126,18 +73,6 @@ in
   # Support NTFS
   boot.supportedFilesystems = [ "ntfs" ];
 
-  # Enable PostgreSQL
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_14;
-    enableTCPIP = true;
-    authentication = pkgs.lib.mkOverride 14 ''
-      local all all trust
-      host all all 127.0.0.1/32 trust
-      host all all ::1/128 trust
-    '';
-  };
-
   # Don't shutdown on power button press
   services.logind.extraConfig = ''
     HandlePowerKey=ignore
@@ -151,41 +86,6 @@ in
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" "audio" "docker" ];
     home = "/home/tim";
-  };
-
-  xdg.mime.defaultApplications = {
-    "video/mp4" = "mpv.desktop";
-    "video/webm" = "mpv.desktop";
-    "video/x-matroska" = "mpv.desktop";
-    "application/pdf" = "firefox.desktop";
-    "x-scheme-handler/mailto" = "thunderbird.desktop";
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
-  };
-
-  # Docker
-  virtualisation.docker.enable = true;
-
-  # Syncthing
-  services = {
-    syncthing = {
-      enable = true;
-      user = "tim";
-      dataDir = "/home/tim/Sync";
-      configDir = "/home/tim/.config/syncthing";
-      overrideDevices = true; # overrides any devices added or deleted through the WebUI
-      overrideFolders = true; # overrides any folders added or deleted through the WebUI
-      settings = {
-        devices = {
-          "phone" = { id = "E7Q2U2F-6QQW3BO-ZEEURSH-A24UNTB-7FRH5HW-YB6IPPT-HR52YXY-ORQUGAX"; };
-        };
-        folders = {
-          "Sync" = { # Name of folder in Syncthing, also the folder ID
-            path = "/home/tim/Sync"; # Which folder to add to Syncthing
-            devices = [ "phone" ]; # Which devices to share the folder with
-          };
-        };
-      };
-    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are

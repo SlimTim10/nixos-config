@@ -1,0 +1,15 @@
+*
+*.elc
+!.gitignore
+!.emacs
+!default.nix
+!*.ahk
+!/.emacs.d/
+!/.emacs.d/lisp/
+!/.emacs.d/lisp/*
+!/.emacs.d/themes/
+!/.emacs.d/themes/*
+!/.emacs.d/lisp/ivy/
+!/.emacs.d/lisp/ivy/*
+!/.emacs.d/lisp/use-package/
+!/.emacs.d/lisp/use-package/*
