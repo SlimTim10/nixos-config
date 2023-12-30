@@ -107,6 +107,9 @@ in {
     unstable.zoom-us # video meetings
     unstable.slack # HiDPI resolution fix: --force-device-scale-factor=1.5
 
+    # for Android
+    jmtpfs # file transfers
+
     # TODO
     # my packages
     # easy-invoice-maker.packages."${pkgs.system}".easy-invoice-maker

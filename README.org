@@ -1,54 +1,59 @@
 * nixos-config
 
-** XMonad Cheatsheet
+** Navigation Cheatsheet
 
 Keys:
-- M1 = Windows key
+- W = Super key (Windows key)
 - M = Alt
 - C = Ctrl
 - S = Shift
 
-| Key             | Action                     | Program(s)           |
-|-----------------+----------------------------+----------------------|
-| M1-p            | Launch dmenu (run program) | XMonad               |
-| M1-x            | Lock screen                | XMonad / lock-screen |
-| M1-space        | Rotate window layout       | XMonad               |
-| M1-b            | Toggle xmobar              | XMonad               |
-| M1-f            | Full screen layout         | XMonad               |
-| M1-o / M1-j     | Focus next window          | XMonad               |
-| M1-S-o / M1-k   | Focus prev window          | XMonad               |
-| M1-S-j / M1-S-k | Shift window               | XMonad               |
-| M1-h / M1-l     | Resize window              | XMonad               |
-| M1-s            | Search window              | XMonad               |
-| M1-[1..9]       | Select workspace           | XMonad               |
-| M1-=            | Select/create workspace    | XMonad               |
-| M1-S-=          | Move window to workspace   | XMonad               |
-| M1-S-[1..9]     | Move window to workspace   | XMonad               |
-| M1-z / M1-/     | Select prev workspace      | XMonad               |
-| M1-C-M--        | Delete workspace           | XMonad               |
-| M1-e            | Focus Emacs                | XMonad               |
+| Key           | Action                     | Program(s)           |
+|---------------+----------------------------+----------------------|
+| W-p           | Launch dmenu (run program) | XMonad               |
+| W-x           | Lock screen                | XMonad / lock-screen |
+| W-space       | Rotate window layout       | XMonad               |
+| W-b           | Toggle xmobar              | XMonad / xmobar      |
+| W-f           | Full screen layout         | XMonad               |
+| W-o / W-j     | Focus next window          | XMonad               |
+| W-S-o / W-k   | Focus prev window          | XMonad               |
+| W-S-j / W-S-k | Shift window               | XMonad               |
+| W-h / W-l     | Resize window              | XMonad               |
+| W-s           | Search window              | XMonad               |
+| W-[1..9]      | Select workspace           | XMonad               |
+| W-=           | Select/create workspace    | XMonad               |
+| W-S-=         | Move window to workspace   | XMonad               |
+| W-S-[1..9]    | Move window to workspace   | XMonad               |
+| W-z / W-/     | Select prev workspace      | XMonad               |
+| W-C-M--       | Delete workspace           | XMonad               |
+| W-e           | Focus Emacs                | XMonad               |
 
 ** Installation
 
 *** During NixOS installation
 
-Before ~nixos-install~, use ~initial_configuration.nix~ as configuration.nix (enables networking and sets up basic user). After ~nixos-install~, set a password for user ~tim~:
+Before ~nixos-install~, use ~./initial-configuration.nix~ as configuration.nix. This enables networking and sets up a basic user. After ~nixos-install~, set a password for user ~tim~:
 
 #+begin_src sh
 $ passwd tim
 #+end_src
 
 *** From new NixOS installation
-How to login to GitHub? Using "gh" is an option. HTTPS better than SSH?
+
 #+begin_src sh
 $ git clone git@github.com:SlimTim10/nixos-config.git /home/tim/.nix-config
-$ git clone git@github.com:SlimTim10/emacs-home.git /home/tim/emacs-home
 $ cd ~/.nix-config
-$ cp hardware.nix.example hardware.nix
-$ ./nixos-rebuild.sh
 #+end_src
 
-** Auto mount USB external drive
+Create new system config in ~./systems~ based on ~./systems/desktop~.
+
+#+begin_src sh
+$ sudo nixos-rebuild switch --flake .#this-system
+#+end_src
+(Replace ~this-system~ with your new system's name.)
+
+** Set up auto mounting external drive
+
 #+begin_src sh
 $ sudo fdisk -l # find the drive
 $ sudo mkdir -p /mnt/external-hdd
@@ -57,17 +62,27 @@ $ sudo mount -t ntfs -o umask=000 /dev/sdx1 /mnt/external-hdd # for NTFS-formatt
 $ sudo nixos-generate-config # updates /etc/nixos/hardware-configuration.nix
 #+end_src
 
+Copy contents of ~/etc/nixos/hardware-configuration.nix~ to ~./systems/<this-system>/hardware-configuration.nix~.
+
 ** Storage management (garbage collection)
-You can remove all but the current generation with
+
+Do garbage collection (delete unreachable paths in the Nix store):
 
 #+begin_src sh
-$ sudo nix-collect-garbage -d
+$ nix store gc --debug
 #+end_src
+(This is the recommended way for a flake-based config.)
 
-There are also user-specific generations for different things (eg. home-manager). These can be removed with
+Delete all old generations of profiles prior to deleting unreachable store objects:
 
 #+begin_src sh
 $ nix-collect-garbage -d
+#+end_src
+
+You can remove all but the current generation with:
+
+#+begin_src sh
+$ sudo nix-collect-garbage -d
 #+end_src
 
 More info
@@ -76,36 +91,45 @@ More info
 
 ** File organization
 
-General configuration is in ~configuration.nix~.
+~./flake.nix~: The starting point for this configuration. Sets the sources for packages, sets up users, and includes all the other files.
 
-...
+~./flake.lock~: Contains a lock for every flake input specified in ~./flake.nix~ for reproducibility.
+
+~./configuration.nix~: Essential global configuration settings.
+
+~./core-packages.nix~: Essential packages and miscellaneous tools included for all systems.
+
+~./home.nix~: Used as the main configuration for the ~tim~ user. Sets all included programs and packages for ~tim~.
+
+~./programs~: Programs that need some extra configuration. Meant to be imported by a user's configuration, such as ~./home.nix~.
+
+~./secrets~: Encrypted secrets for values that are needed somewhere in the configuration, but shouldn't be exposed to the public. See [Secrets Management] below.
+
+~./systems~: Configurations for separate systems, which could be separate physical machines or virtual systems (currently used for separate physical machines). Includes hardware configurations and software services.
 
 ** Installing and removing packages (programs)
 
+To find a package and its name, search at:
+
 https://search.nixos.org/packages
 
-3 different ways:
+To install a package for the user ~tim~, add it to ~./home.nix~.
 
-1. Permanent
-   Add to packages.nix
+To install a package in an ephemeral shell:
 
-2. Ephemeral
-   [tim@nixos:~]$ nix-shell -p tty-solitaire
-   [nix-shell:~]$ ttysolitaire
-   [nix-shell:~]$ exit
-   [tim@nixos:~]$ nix-collect-garbage
+#+begin_src sh
+$ nix shell nixpkgs#hello
+$ hello
+$ exit
+#+end_src
 
-3. Global
-(DON'T USE THIS)
-nix-env -iA nixos.tty-solitaire
+To delete a package, find it in the nix store and try using these commands:
 
-Deleting:
-nix-store --query --roots /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1.drv
-sudo nix store delete /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1
-
-** Navigation
-
-...
+#+begin_src sh
+$ ls /nix/store | ag solitaire
+$ nix-store --query --roots /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1.drv
+$ sudo nix store delete /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1
+#+end_src
 
 ** Networking
 
@@ -116,12 +140,10 @@ Use nmtui (or nmcli) from command line
 Use ~jmtpfs~ to mount the device, then use ~rsync~ as root.
 
 #+begin_src
-$ su
-# nix-shell -p jmtpfs
-# jmtpfs /media
-# cd "/media/Internal shared storage/DCIM/Camera"
-# rsync -avhP --ignore-existing IMG_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
-# rsync -avhP --ignore-existing VID_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
+$ jmtpfs /media
+$ cd "/media/Internal shared storage/DCIM/Camera"
+$ sudo rsync -avhP --ignore-existing IMG_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
+$ sudo rsync -avhP --ignore-existing VID_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
 #+end_src
 
 See https://nixos.wiki/wiki/MTP.
@@ -130,14 +152,11 @@ See https://nixos.wiki/wiki/MTP.
 
 Sync drives, deleting files in destination that are not in source.
 
-#+begin_src
+#+begin_src sh
 $ sudo fdisk -l
 $ sudo mount /dev/sdx1 /media/
 $ git clone git@github.com:SlimTim10/nixos-config.git /media/.nix-config
 $ cd /media/.nix-config
-$ git pull
-$ git clone git@github.com:SlimTim10/emacs-home.git /media/emacs-home
-$ cd /media/emacs-home
 $ git pull
 $ rsync -avhPW --delete --compress-level=0 /home/tim/Sync/ /mnt/external-hdd/data/Backups/Sync/
 $ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/data/ /media/data/
@@ -152,7 +171,7 @@ Uses [[https://github.com/ryantm/agenix][agenix]] CLI tool with the ~./secrets/s
 
 1. Create a secret file:
    
-   #+begin_src
+   #+begin_src sh
    $ cd secrets
    $ agenix -e syncthingApiKey.age
    #+end_src
@@ -205,8 +224,17 @@ Uses [[https://github.com/ryantm/agenix][agenix]] CLI tool with the ~./secrets/s
 
 *** If XMonad fails to start or recompile, try using a shell that has the required dependencies:
 
-#+begin_src
+#+begin_src sh
 $ nix-shell -p "ghc.withPackages (pkgs: with pkgs; [ xmonad xmonad-extras xmonad-contrib ])"
 $ xmonad --recompile
 $ xmonad --restart
 #+end_src
+
+*** Classic Nix commands replaced by flakes
+
+| Classic             | Flake                 |
+|---------------------+-----------------------|
+| nix-channel         | inputs in flake.nix   |
+| nix-shell           | nix develop/shell/run |
+| nix-build           | nix build             |
+| nix-collect-garbage | nix store gc --debug  |
