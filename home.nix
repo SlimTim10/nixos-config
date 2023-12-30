@@ -1,6 +1,5 @@
 {
   config,
-  osConfig,
   pkgs,
   easy-invoice-maker,
   ...
@@ -21,13 +20,6 @@ let
   weather-forecast = pkgs.writeShellScriptBin "weather-forecast" ''
     firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
   '';
-
-  # Syncthing status for xmobar
-  syncthingApiKey = "$(cat ${osConfig.age.secrets."syncthingApiKey".path})";
-  xmobar-syncthing-status = pkgs.writeShellScriptBin "xmobar-syncthing-status" ''
-    status="$(curl --silent -X GET -H "X-API-Key: ${syncthingApiKey}" http://localhost:8384/rest/db/status?folder=Sync | jq -r '.state')"
-    echo "Syncthing: $status"
-  '';
   
   # Take a screenshot (interactive selection) and copy the selection to the clipboard
   screenshot = pkgs.writeShellScriptBin "screenshot" ''
@@ -36,20 +28,6 @@ let
 in {
   home.username = "tim";
   home.homeDirectory = "/home/tim";
-
-  # Link config files
-  home.file.".xmobarrc" = {
-    source = ./.xmobarrc;
-  };
-  home.file.".config/mpv" = {
-    source = ./programs/mpv/config;
-  };
-  home.file.".Xresources" = {
-    source = ./.Xresources;
-  };
-  home.file.".xmonad/xmonad.hs" = {
-    source = ./programs/xmonad/xmonad.hs;
-  };
 
   xdg.mimeApps.defaultApplications = {
     "video/mp4" = "mpv.desktop";
@@ -95,9 +73,6 @@ in {
     qdirstat # visual disk space analyzer
 
     # desktop visuals
-    xmobar # status bar for xmonad
-    jq # command-line JSON processor
-    xmobar-syncthing-status # uses jq
     dzen2 # for displaying volume
 
     # password management
@@ -113,7 +88,6 @@ in {
     freetube # open source YouTube client
 
     # music and video players
-    mpv
     vlc
     spotify
 
@@ -130,9 +104,8 @@ in {
     hledger-web # web UI
 
     # social/work
-    # TODO
-    # nixpkgs-unstable.zoom-us # video meetings
-    # nixpkgs-unstable.slack # HiDPI resolution fix: --force-device-scale-factor=1.5
+    unstable.zoom-us # video meetings
+    unstable.slack # HiDPI resolution fix: --force-device-scale-factor=1.5
 
     # TODO
     # my packages

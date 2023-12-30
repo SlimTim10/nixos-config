@@ -20,14 +20,21 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, home-manager, agenix, ... }:
+  outputs = inputs@{ nixpkgs, nixpkgs-unstable, home-manager, agenix, ... }:
     let
       # Common
       system = "x86_64-linux";
       specialArgs = inputs;
+      overlay-unstable = final: prev: {
+        unstable = import nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
+      };
       modules = [
         ./configuration.nix
         agenix.nixosModules.default
+        ({ config, pkgs, ... }: { nixpkgs.overlays = [ overlay-unstable ]; })
       ];
     in {
       nixosConfigurations = {
@@ -41,13 +48,15 @@
             ./systems/desktop/hardware.nix
             ./systems/desktop/hardware-configuration.nix
             ./systems/desktop/services.nix
-            # agenix.nixosModules.age
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              # home-manager.users.tim = import ./home.nix;
               home-manager.users.tim.imports = [ ./home.nix ];
+              home-manager.extraSpecialArgs = {
+                inherit nixpkgs-unstable;
+                inherit nixpkgs;
+              };
             }
           ];
         };

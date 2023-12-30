@@ -1,6 +1,7 @@
 { config, lib, pkgs, ... }:
 
 let
+  # Swap ctrl and alt, and map capslock to alt
   myCustomLayout = pkgs.writeText "xkb-layout" ''
     ! Swap ctrl and alt, and map capslock to alt
     clear lock
@@ -16,13 +17,15 @@ let
   '';
 in {
   # XMonad
-  services.xserver.windowManager.xmonad = {
-    enable = true;
-    enableContribAndExtras = true;
+  services.xserver = {
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+      config = builtins.readFile ../../programs/xmonad/xmonad.hs;
+    };
+    displayManager.defaultSession = "none+xmonad";
+    autorun = true;
   };
-  services.xserver.autorun = true;
-  services.xserver.displayManager.defaultSession = "none+xmonad";
-  services.xserver.windowManager.xmonad.config = builtins.readFile ../../programs/xmonad/xmonad.hs;
 
   # Use my keymap
   services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";

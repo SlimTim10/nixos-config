@@ -3,7 +3,6 @@
 {
   imports = [
     ./core-packages.nix
-    # ./xfce.nix
   ];
 
   # Enables flakes
@@ -49,11 +48,6 @@
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Set resolution
-  # TODO: make automatic (4K monitor resolution needs DPI scaling)
-  # xrandr -s 3840x2160 --output HDMI-A-0 --scale-from 1440x900
-  # services.xserver.resolutions = [ { x = 1440; y = 900; } ];
       
   # Configure keymap in X11
   services.xserver.layout = "us";
