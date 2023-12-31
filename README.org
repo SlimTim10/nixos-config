@@ -123,6 +123,14 @@ $ hello
 $ exit
 #+end_src
 
+Or, install from unstable:
+
+#+begin_src sh
+$ nix shell github:nixos/nixpkgs/nixpkgs-unstable#hello
+$ hello
+$ exit
+#+end_src
+
 To delete a package, find it in the nix store and try using these commands:
 
 #+begin_src sh
