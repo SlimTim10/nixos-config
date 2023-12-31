@@ -107,7 +107,7 @@ More info
 
 ~./systems~: Configurations for separate systems, which could be separate physical machines or virtual systems (currently used for separate physical machines). Includes hardware configurations and software services.
 
-** Installing and removing packages (programs)
+** Installing, removing, and updating packages (programs)
 
 To find a package and its name, search at:
 
@@ -129,6 +129,12 @@ To delete a package, find it in the nix store and try using these commands:
 $ ls /nix/store | ag solitaire
 $ nix-store --query --roots /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1.drv
 $ sudo nix store delete /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1
+#+end_src
+
+To update ~./flake.lock~ for all inputs in ~./flake.nix~:
+
+#+begin_src sh
+$ nix flake update
 #+end_src
 
 ** Networking
