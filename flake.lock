@@ -45,6 +45,45 @@
         "type": "github"
       }
     },
+    "easy-invoice-maker": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1704278822,
+        "narHash": "sha256-fiHomwtRGjZS8ByFgh36Z7extWUJkSU+Hytuspdd5Os=",
+        "owner": "SlimTim10",
+        "repo": "easy-invoice-maker",
+        "rev": "a6eb88d77b8a8f74d3cb348fe26fe703283b50dd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SlimTim10",
+        "repo": "easy-invoice-maker",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1701680307,
+        "narHash": "sha256-kAuep2h5ajznlPMD9rnQyffWG8EM/C73lejGofXvdM8=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "4022d587cbbfd70fe950c1e2083a02621806a725",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -122,9 +161,25 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "easy-invoice-maker": "easy-invoice-maker",
         "home-manager": "home-manager_2",
         "nixpkgs": "nixpkgs",
         "nixpkgs-unstable": "nixpkgs-unstable"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
       }
     }
   },

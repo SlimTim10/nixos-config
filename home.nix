@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  easy-invoice-maker,
+  flakePkgs,
   ...
 }:
 
@@ -25,6 +25,7 @@ let
   screenshot = pkgs.writeShellScriptBin "screenshot" ''
     maim -s | xclip -selection clipboard -t image/png
   '';
+
 in {
   home.username = "tim";
   home.homeDirectory = "/home/tim";
@@ -110,9 +111,8 @@ in {
     # for Android
     jmtpfs # file transfers
 
-    # TODO
     # my packages
-    # easy-invoice-maker.packages."${pkgs.system}".easy-invoice-maker
+    flakePkgs.easy-invoice-maker
 
     # misc
     deluge # torrent client
