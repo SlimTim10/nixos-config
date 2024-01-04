@@ -827,13 +827,29 @@ behavior added."
 (use-package rg
   :ensure-system-package rg)
 
+(defvar my/keys-keymap (make-keymap)
+  "Keymap for my/keys-mode")
+
+(define-minor-mode my/keys-mode
+  "Minor mode for my personal keybindings."
+  :init-value t
+  :global t
+  :keymap my/keys-keymap)
+
+;; Don't let arbitrary modes take precedence over my global keybindings.
+;; The keymaps in `emulation-mode-map-alists' take precedence over
+;; `minor-mode-map-alist'
+(add-to-list 'emulation-mode-map-alists
+             `((my/keys-mode . ,my/keys-keymap)))
+
 ;; My custom bindings
-(global-set-key (kbd "M-o") (lambda () (interactive) (other-window 1)))
-(global-set-key (kbd "M-O") (lambda () (interactive) (other-window -1)))
-(global-set-key (kbd "M-/") 'hippie-expand)
-(global-set-key (kbd "C-<") 'pop-to-mark-command)
-(global-set-key (kbd "C->") 'unpop-to-mark-command)
-(global-set-key (kbd "M-k") 'kill-current-buffer)
+(define-key my/keys-keymap (kbd "M-o") (lambda () (interactive) (other-window 1)))
+(define-key my/keys-keymap (kbd "M-O") (lambda () (interactive) (other-window -1)))
+(define-key my/keys-keymap (kbd "M-/") 'hippie-expand)
+(define-key my/keys-keymap (kbd "C-<") 'pop-to-mark-command)
+(define-key my/keys-keymap (kbd "C->") 'unpop-to-mark-command)
+(define-key my/keys-keymap (kbd "M-k") 'kill-current-buffer)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
