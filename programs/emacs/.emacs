@@ -16,7 +16,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(auto-dim-other-buffers drag-stuff elm-mode yaml-mode web-mode use-package tide smex rust-mode ruby-end rjsx-mode php-mode pdf-tools nix-mode markdown-preview-mode magit hledger-mode haskell-mode gptel go-mode go flx emmet-mode elixir-mode dumb-jump csharp-mode counsel-projectile avy ag))
+   '(auto-dim-other-buffers drag-stuff elm-mode yaml-mode web-mode use-package tide smex rust-mode ruby-end rjsx-mode php-mode nix-mode markdown-preview-mode magit hledger-mode haskell-mode gptel go-mode go flx emmet-mode elixir-mode dumb-jump counsel-projectile avy ag))
  '(subword-mode 1 t)
  '(typescript-indent-level 2))
 (package-initialize)
@@ -47,6 +47,7 @@
 (setq bookmark-save-flag 1)
 (setq tab-bar-mode t)
 (setq tab-bar-show t)
+(setq package-install-upgrade-built-in t)
 
 ;; Auto revert files when they change
 (global-auto-revert-mode t)
@@ -220,9 +221,6 @@
 			(local-set-key (kbd "C-c C-b") 'backward-sexp)
 			;; (buffer-face-mode 1)
 			))
-
-;; C# programming
-(use-package csharp-mode)
 
 ;; Python programming
 (add-hook 'python-mode-hook
@@ -794,22 +792,32 @@ behavior added."
               (make-local-variable 'company-backends)
               (company-mode 1)
     		  (setq company-idle-delay 0)
-              (add-to-list 'company-backends 'hledger-company))))
+              (add-to-list 'company-backends 'hledger-company)))
+  )
 
 ;; agda
 (load-file (let ((coding-system-for-read 'utf-8))
                 (shell-command-to-string "agda-mode locate")))
 
 ;; View PDFs
-(use-package pdf-tools
-  :ensure t
-  :pin manual ;; don't reinstall when package updates
-  :mode  ("\\.pdf\\'" . pdf-view-mode)
-  :config
-  (setq-default pdf-view-display-size 'fit-page)
-  (setq pdf-annot-activate-created-annotations t)
-  (pdf-tools-install :no-query)
-  (require 'pdf-occur))
+;; Installing it with use-package doesn't work. Install it using package-install, then run pdf-tools-install.
+;; (use-package pdf-tools
+;;   :ensure t
+;;   :mode  ("\\.pdf\\'" . pdf-view-mode)
+;;   :config
+;;   (require 'pdf-tools)
+;;   (require 'pdf-view)
+;;   (require 'pdf-misc)
+;;   (require 'pdf-occur)
+;;   (require 'pdf-util)
+;;   (require 'pdf-annot)
+;;   (require 'pdf-info)
+;;   (require 'pdf-isearch)
+;;   (require 'pdf-history)
+;;   (require 'pdf-links)
+;;   (pdf-tools-install :no-query)
+;;   (setq-default pdf-view-display-size 'fit-page)
+;;   (setq pdf-annot-activate-created-annotations t))
 
 ;; My custom bindings
 (global-set-key (kbd "M-o") (lambda () (interactive) (other-window 1)))

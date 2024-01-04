@@ -252,3 +252,7 @@ $ xmonad --restart
 | nix-shell           | nix develop/shell/run |
 | nix-build           | nix build             |
 | nix-collect-garbage | nix store gc --debug  |
+
+*** Emacs desktop load doesn't restore buffers from ephemeral drive
+
+On startup, remember to mount ephemeral drives before starting emacs.

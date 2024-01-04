@@ -13,7 +13,7 @@
   };
 
   home.packages = with pkgs; [
-    emacs
+    unstable.emacs
     imagemagick # for image-dired in emacs
     silver-searcher # ag (grep alternative)
   ];
