@@ -30,13 +30,16 @@ in {
   home.username = "tim";
   home.homeDirectory = "/home/tim";
 
-  xdg.mimeApps.defaultApplications = {
-    "video/mp4" = "mpv.desktop";
-    "video/webm" = "mpv.desktop";
-    "video/x-matroska" = "mpv.desktop";
-    "application/pdf" = "firefox.desktop";
-    "x-scheme-handler/mailto" = "thunderbird.desktop";
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "video/mp4" = "mpv.desktop";
+      "video/webm" = "mpv.desktop";
+      "video/x-matroska" = "mpv.desktop";
+      "application/pdf" = "firefox.desktop";
+      "x-scheme-handler/mailto" = "thunderbird.desktop";
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
+    };
   };
 
   programs.bash = {
@@ -121,7 +124,8 @@ in {
     xclip # clipboard help
     maim # screenshot utility
     screenshot # uses maim (bind to PrtSc key)
-    libreoffice
+    libreoffice # for various writing formats
+    ripgrep # grep alternative
   ];
 
   # This value determines the home Manager release that your
