@@ -58,8 +58,9 @@ in {
   };
 
   # For Haskell Reflex FRP
-  nix.settings.substituters = [ "https://nixcache.reflex-frp.org" ];
-  nix.settings.trusted-public-keys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
+  # WARNING!!! This was causing nix to not use any binary caches, building every ephemeral shell package from source.
+  # nix.settings.substituters = [ "https://nixcache.reflex-frp.org" ];
+  # nix.settings.trusted-public-keys = [ "ryantrinkle.com-1:JJiAKaRv9mWgpVAz8dwewnZe0AzzEAzPkagE9SP5NWI=" ];
 
   imports = [
     ./programs
