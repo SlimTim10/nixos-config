@@ -171,6 +171,10 @@
   (global-set-key (kbd "C-c C-/") 'winner-undo)
   )
 
+;; Company mode
+(use-package company
+  :config
+  (global-company-mode -1))
 
 ;; C programming
 (setq-default c-basic-offset 4
