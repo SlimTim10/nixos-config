@@ -123,7 +123,7 @@ $ hello
 $ exit
 #+end_src
 
-Or, install from unstable:
+Or, install from a specific nixpkgs version, like unstable:
 
 #+begin_src sh
 $ nix shell github:nixos/nixpkgs/nixpkgs-unstable#hello
@@ -143,6 +143,14 @@ To update ~./flake.lock~ for all inputs in ~./flake.nix~:
 
 #+begin_src sh
 $ nix flake update
+$ sudo nixos-rebuild switch --flake .#desktop
+#+end_src
+
+To update a specific input flake, for example ~easy-invoice-maker~:
+
+#+begin_src sh
+$ nix flake lock --update-input easy-invoice-maker
+$ sudo nixos-rebuild switch --flake .#desktop
 #+end_src
 
 ** Networking
