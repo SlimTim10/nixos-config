@@ -827,6 +827,15 @@ behavior added."
 (use-package rg
   :ensure-system-package rg)
 
+;; markdown
+(use-package markdown-mode
+  :ensure t
+  :mode ("\\.md\\'" . gfm-mode))
+
+
+
+;; My custom keys
+
 (defvar my/keys-keymap (make-keymap)
   "Keymap for my/keys-mode")
 
@@ -849,6 +858,8 @@ behavior added."
 (define-key my/keys-keymap (kbd "C-<") 'pop-to-mark-command)
 (define-key my/keys-keymap (kbd "C->") 'unpop-to-mark-command)
 (define-key my/keys-keymap (kbd "M-k") 'kill-current-buffer)
+
+
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
