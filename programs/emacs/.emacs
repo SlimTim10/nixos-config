@@ -16,7 +16,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(auto-dim-other-buffers drag-stuff elm-mode yaml-mode web-mode use-package tide smex rust-mode ruby-end rjsx-mode php-mode nix-mode markdown-preview-mode magit hledger-mode haskell-mode gptel go-mode go flx emmet-mode elixir-mode dumb-jump counsel-projectile avy ag))
+   '(auto-dim-other-buffers drag-stuff elm-mode yaml-mode web-mode use-package tide smex rust-mode ruby-end rjsx-mode php-mode nix-mode markdown-preview-mode magit haskell-mode gptel go-mode go flx emmet-mode elixir-mode dumb-jump counsel-projectile avy ag))
  '(subword-mode 1 t)
  '(typescript-indent-level 2))
 (package-initialize)
@@ -752,51 +752,16 @@ behavior added."
 (when (eq window-system 'w32)
   (setq tramp-default-method "plink"))
 
-;; hledger
-(use-package hledger-mode
+;; ledger
+(use-package ledger-mode
   :mode ("\\.journal\\'")
-  :commands hledger-enable-reporting
-  :preface
-  (defun hledger/next-entry ()
-    "Move to next entry and pulse."
-    (interactive)
-    (hledger-next-or-new-entry)
-    (hledger-pulse-momentary-current-entry))
-
-  (defface hledger-warning-face
-    '((((background dark))
-       :background "Red" :foreground "White")
-      (((background light))
-       :background "Red" :foreground "White")
-      (t :inverse-video t))
-    "Face for warning"
-    :group 'hledger)
-
-  (defun hledger/prev-entry ()
-    "Move to previous entry and pulse."
-    (interactive)
-    (hledger-backward-entry)
-    (hledger-pulse-momentary-current-entry))
-
-  :bind (("C-c j" . hledger-run-command)
-         :map hledger-mode-map
-         ("C-c e" . hledger-jentry)
-         ("M-p" . hledger/prev-entry)
-         ("M-n" . hledger/next-entry)
-         ("C-c C-c" . hledger-toggle-star))
-  
-  :init
-  (setq hledger-jfile
-        (expand-file-name "~/Sync/Accounting/current.journal"))
-  (setq hledger-currency-string "$")
-
   :config
-  (add-hook 'hledger-mode-hook
-            (lambda ()
-              (make-local-variable 'company-backends)
-              (company-mode 1)
-    		  (setq company-idle-delay 0)
-              (add-to-list 'company-backends 'hledger-company)))
+  (setq ledger-mode-should-check-version nil)
+  (setq ledger-report-links-in-register nil)
+  (setq ledger-binary-path "hledger")
+  (setq tab-always-indent 'complete)
+  (setq completion-cycle-threshold t)
+  (setq ledger-complete-in-steps t)
   )
 
 ;; agda
