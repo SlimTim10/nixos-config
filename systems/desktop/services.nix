@@ -77,7 +77,7 @@ in {
     "/home/tim/.ssh/id_ed25519"
   ];
   age.secrets."syncthingApiKey" = {
-    file = ../../secrets/syncthingApiKey.age;
+    file = ./secrets/syncthingApiKey.age;
     mode = "700";
     owner = "tim";
     group = "users";
