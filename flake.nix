@@ -83,6 +83,30 @@
             }
           ];
         };
+
+        # Run the following command in the flake's directory to
+        # deploy this configuration on any NixOS system:
+        #   sudo nixos-rebuild switch --flake .#laptop
+        laptop = nixpkgs.lib.nixosSystem {
+          inherit system;
+          inherit specialArgs;
+          modules = modules ++ [
+            ./systems/laptop/hardware.nix
+            ./systems/laptop/hardware-configuration.nix
+            ./systems/laptop/services.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.tim.imports = [ ./home.nix ];
+              home-manager.extraSpecialArgs = {
+                inherit nixpkgs-unstable;
+                inherit nixpkgs;
+                inherit flakePkgs;
+              };
+            }
+          ];
+        };
       };
     };
 }
