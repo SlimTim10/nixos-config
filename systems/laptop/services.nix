@@ -41,6 +41,7 @@ in {
     settings = {
       devices = {
         "phone" = { id = "E7Q2U2F-6QQW3BO-ZEEURSH-A24UNTB-7FRH5HW-YB6IPPT-HR52YXY-ORQUGAX"; };
+        "desktop" = { id = "WXSYB7W-7NFJOM3-TIV7ZLD-OAZMBVF-ILSYQR7-DYYBZHD-MCUHF4H-O6IYZAU"; };
       };
       folders = {
         "Sync" = { # Name of folder in Syncthing, also the folder ID
@@ -77,7 +78,7 @@ in {
     "/home/tim/.ssh/id_ed25519"
   ];
   age.secrets."syncthingApiKey" = {
-    file = ../../secrets/syncthingApiKey.age;
+    file = ./secrets/syncthingApiKey.age;
     mode = "700";
     owner = "tim";
     group = "users";
