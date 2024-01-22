@@ -123,6 +123,11 @@ in {
     # for Android
     jmtpfs # file transfers
 
+    # graphics
+    maim # screenshot utility
+    feh # simple image viewer
+    geeqie # image viewer/organizer
+
     # my packages
     flakePkgs.easy-invoice-maker
 
@@ -131,11 +136,9 @@ in {
     xfce.thunar # graphical file manager
     megasync # MEGA cloud storage
     xclip # clipboard help
-    maim # screenshot utility
     screenshot # uses maim (bind to PrtSc key)
     libreoffice # for various writing formats
     ripgrep # grep alternative
-    feh # image viewer
   ];
 
   # This value determines the home Manager release that your
