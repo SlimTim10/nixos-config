@@ -387,6 +387,7 @@
    ("k" . dired-kill-and-next-subdir) ; Opposite of "i"
    ("RET" . xah-open-in-external-app)
    ("DEL" . dired-up-alternate-directory)
+   ("<tab>" . dired-subtree-toggle)
    )
   :config
   (setq ls-lisp-use-insert-directory-program nil)
@@ -397,6 +398,7 @@
   (setq dired-isearch-filenames t) ; Limit search commands to file names
   (put 'dired-find-alternate-file 'disabled nil) ; Enable useful command
   )
+(use-package dired-subtree :ensure t :after dired)
 
 (defun xah-open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
