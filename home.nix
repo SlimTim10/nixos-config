@@ -36,9 +36,17 @@ in {
       "video/mp4" = "mpv.desktop";
       "video/webm" = "mpv.desktop";
       "video/x-matroska" = "mpv.desktop";
+      "video/x-msvideo" = "mpv.desktop";
       "application/pdf" = "firefox.desktop";
       "x-scheme-handler/mailto" = "thunderbird.desktop";
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = "libreoffice.desktop";
+      "image/gif" = "feh.desktop";
+      "image/jpeg" = "feh.desktop";
+      "image/png" = "feh.desktop";
+      "image/svg+xml" = "feh.desktop";
+      "image/tiff" = "feh.desktop";
+      "image/webp" = "feh.desktop";
+      "image/bmp" = "feh.desktop";
     };
   };
 
@@ -127,6 +135,7 @@ in {
     screenshot # uses maim (bind to PrtSc key)
     libreoffice # for various writing formats
     ripgrep # grep alternative
+    feh # image viewer
   ];
 
   # This value determines the home Manager release that your
