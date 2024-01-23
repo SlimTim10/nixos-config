@@ -109,6 +109,7 @@ in {
     cabal-install
     nix-prefetch-git
     ghc
+    ghcid
     agda
     nodejs
 
