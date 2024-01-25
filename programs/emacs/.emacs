@@ -226,6 +226,9 @@
 			;; (buffer-face-mode 1)
 			))
 
+;; TypeScript programming
+(use-package typescript-mode)
+
 ;; Python programming
 (add-hook 'python-mode-hook
 		  (lambda ()
