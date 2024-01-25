@@ -129,6 +129,10 @@ in {
     feh # simple image viewer
     geeqie # image viewer/organizer
 
+    # gaming
+    lutris
+    wineWowPackages.stable
+
     # my packages
     flakePkgs.easy-invoice-maker
 

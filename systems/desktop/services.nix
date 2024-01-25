@@ -73,6 +73,13 @@ in {
   # Open port for Spotify
   networking.firewall.allowedTCPPorts = [ 57621 ];
 
+  # Steam
+  programs.steam = {
+    enable = true;
+    # remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    # dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  };
+
   # Secrets
   age.identityPaths = [
     "/home/tim/.ssh/id_ed25519"
