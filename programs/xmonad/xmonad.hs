@@ -13,6 +13,8 @@ import qualified XMonad.Layout.TwoPane as TwoPane
 import qualified XMonad.Actions.Volume as Vol
 import qualified XMonad.Util.Dzen as Dzen -- display volume
 import qualified XMonad.Hooks.EwmhDesktops as Ewmh
+import qualified XMonad.Layout.Reflect as Reflect
+import qualified XMonad.Layout.MultiToggle as Toggle
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -69,6 +71,7 @@ main = do
       , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showVolume . show . round)
       , ("<XF86AudioRaiseVolume>", Vol.raiseVolume 5 >>= showVolume . show . round)
       , ("<Print>", X.spawn "screenshot")
+      , ("M-r", X.sendMessage $ Toggle.Toggle Reflect.REFLECTX)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
@@ -106,7 +109,8 @@ myManageHook = X.composeAll
   ]
 
 myLayout =
-  Layout.smartBorders
+  Toggle.mkToggle (Toggle.single Reflect.REFLECTX)
+  $ Layout.smartBorders
   $ tiled ||| X.Mirror tiled ||| twoPane ||| X.Full
   where
     -- default tiling algorithm partitions the screen into two panes
