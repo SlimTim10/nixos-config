@@ -49,6 +49,10 @@
 (setq tab-bar-show t)
 (setq package-install-upgrade-built-in t)
 
+;; Better garbage collection
+(require 'gcmh)
+(gcmh-mode 1)
+
 ;; Auto revert files when they change
 (global-auto-revert-mode t)
 
