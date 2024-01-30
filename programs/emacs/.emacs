@@ -134,7 +134,9 @@
 
 ;; gnu/linux only
 (when (eq system-type 'gnu/linux)
-  (set-face-attribute 'default nil :family "DejaVu Serif" :height 140))
+  (set-face-attribute 'default nil :family "DejaVu Serif" :height 140)
+  (setq delete-by-moving-to-trash t)
+  )
 
 ;; Handle word wrapping
 (global-visual-line-mode 1)
