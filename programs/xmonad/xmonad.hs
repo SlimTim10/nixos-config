@@ -38,6 +38,8 @@ main = do
     ]
     `EZConfig.additionalKeysP`
     ( [ ("M-x", X.spawn "lock-screen")
+      -- Launcher
+      , ("M-p", X.spawn "rofi-custom")
       -- Change to full screen layout
       , ("M-f", X.sendMessage $ X.JumpToLayout "Full")
       -- Go to window by name search

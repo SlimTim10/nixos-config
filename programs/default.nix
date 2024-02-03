@@ -5,5 +5,6 @@
     ./xmobar
     ./xmonad
     ./xresources
+    ./rofi
   ];
 }

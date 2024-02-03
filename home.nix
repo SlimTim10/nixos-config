@@ -75,8 +75,6 @@ in {
   ];
 
   home.packages = with pkgs; [
-    dmenu # app launcher
-
     # system tools
     htop # process monitor
     process-monitor # better visual process monitor
