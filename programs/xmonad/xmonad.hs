@@ -60,17 +60,18 @@ main = do
       -- Go back to most recent workspace
       , ("M-/", CycleWS.toggleWS)
       , ("M-z", CycleWS.toggleWS)
-      , ("M-<Right>", CycleWS.nextWS)
-      , ("M-<Left>", CycleWS.prevWS)
-      -- Need XMonad 0.17.0 for JumpToLayout
-      -- , ("M-<Up>", sendMessage $ X.JumpToLayout "Full")
-      -- , ("M-<Right>", sendMessage $ X.JumpToLayout "TwoPane")
-      -- , ("M-<Down>", sendMessage $ X.JumpToLayout "Tall")
-      -- , ("M-<Left>", sendMessage $ X.JumpToLayout "Mirror Tall")
+      -- Change directly to specific screen layouts
+      , ("M-<Up>", X.sendMessage $ X.JumpToLayout "Full")
+      , ("M-<Right>", X.sendMessage $ X.JumpToLayout "TwoPane")
+      , ("M-<Down>", X.sendMessage $ X.JumpToLayout "Tall")
+      , ("M-<Left>", X.sendMessage $ X.JumpToLayout "Mirror Tall")
+      -- Audio buttons
       , ("<XF86AudioMute>", Vol.toggleMute >>= (B.bool (showVolume "mute") (showVolume "unmute")))
       , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showVolume . show . round)
       , ("<XF86AudioRaiseVolume>", Vol.raiseVolume 5 >>= showVolume . show . round)
+      -- Screenshot
       , ("<Print>", X.spawn "screenshot")
+      -- Reflect layout horizontally
       , ("M-r", X.sendMessage $ Toggle.Toggle Reflect.REFLECTX)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
