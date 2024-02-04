@@ -113,6 +113,12 @@ To find a package and its name, search at:
 
 https://search.nixos.org/packages
 
+Or search from terminal:
+
+#+begin_src sh
+$ nix search nixpkgs hello
+#+end_src
+
 To install a package for the user ~tim~, add it to ~./home.nix~.
 
 To install a package in an ephemeral shell:
