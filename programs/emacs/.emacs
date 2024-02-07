@@ -458,6 +458,7 @@ Version 2019-11-04 2021-02-16"
 ;; Colour theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'dracula t)
+(set-mouse-color "green")
 
 ;; Ivy, Counsel, Swiper
 (use-package ivy
