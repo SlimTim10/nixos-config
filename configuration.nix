@@ -15,7 +15,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.grub.useOSProber = true;
   # Limit the number of generations to keep
-  boot.loader.grub.configurationLimit = 4;
+  boot.loader.systemd-boot.configurationLimit = 10;
 
   # Networking
   networking.hostName = "nixos"; # Define your hostname.
