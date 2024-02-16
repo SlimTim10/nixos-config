@@ -15,6 +15,7 @@ import qualified XMonad.Util.Dzen as Dzen -- display volume
 import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import qualified XMonad.Layout.Reflect as Reflect
 import qualified XMonad.Layout.MultiToggle as Toggle
+import qualified XMonad.Layout.LayoutScreens as LayoutScreens
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -75,6 +76,10 @@ main = do
       , ("<Print>", X.spawn "screenshot")
       -- Reflect layout horizontally
       , ("M-r", X.sendMessage $ Toggle.Toggle Reflect.REFLECTX)
+      -- Split into two screens
+      , ("M-S-<Space>", LayoutScreens.layoutScreens 2 (TwoPane.TwoPane 0.5 0.5))
+      -- Reset the screen configuration
+      , ("M-<Esc>", X.rescreen)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
