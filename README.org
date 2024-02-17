@@ -137,6 +137,14 @@ $ hello
 $ exit
 #+end_src
 
+For an insecure package:
+
+#+begin_src sh
+$ NIXPKGS_ALLOW_INSECURE=1 nix shell nixpkgs#hello --impure
+$ hello
+$ exit
+#+end_src
+
 To delete a package, find it in the nix store and try using these commands:
 
 #+begin_src sh
