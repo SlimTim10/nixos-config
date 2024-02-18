@@ -50,6 +50,12 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Needs a window manager or login doesn't work.
+  services.xserver.windowManager.xmonad = {
+    enable = true;
+    enableContribAndExtras = true;
+  };
+
 
   
 
