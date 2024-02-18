@@ -74,6 +74,33 @@ in {
     ./programs
   ];
 
+  # Make desktop entries for custom apps to show up in the launcher.
+  xdg.desktopEntries."process-monitor" = {
+    name = "Process Monitor";
+    exec = "process-monitor";
+    terminal = false;
+  };
+
+  xdg.desktopEntries."wifi" = {
+    name = "WiFi";
+    genericName = "Network Manager";
+    exec = "wifi";
+    terminal = false;
+  };
+
+  xdg.desktopEntries."weather-forecast" = {
+    name = "Weather Forecast";
+    genericName = "Open weather forecast";
+    exec = "weather-forecast";
+    terminal = false;
+  };
+
+  xdg.desktopEntries."hibernate" = {
+    name = "Hibernate";
+    exec = "hibernate";
+    terminal = false;
+  };
+
   home.packages = with pkgs; [
     # system tools
     htop # process monitor
