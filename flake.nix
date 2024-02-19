@@ -107,6 +107,30 @@
             }
           ];
         };
+
+        # Run the following command in the flake's directory to
+        # deploy this configuration on any NixOS system:
+        #   sudo nixos-rebuild switch --flake .#tim-mercury
+        tim-mercury = nixpkgs.lib.nixosSystem {
+          inherit system;
+          inherit specialArgs;
+          modules = modules ++ [
+            ./systems/tim-mercury/hardware.nix
+            ./systems/tim-mercury/hardware-configuration.nix
+            ./systems/tim-mercury/services.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.tim.imports = [ ./home.nix ];
+              home-manager.extraSpecialArgs = {
+                inherit nixpkgs-unstable;
+                inherit nixpkgs;
+                inherit flakePkgs;
+              };
+            }
+          ];
+        };
       };
     };
 }
