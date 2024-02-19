@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/modules/age.nix"
     ];
 
   # Enables flakes
@@ -85,11 +86,12 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # environment.systemPackages = with pkgs; [
-  #   vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #   wget
-  #   firefox
-  # ];
+  environment.systemPackages = with pkgs; [
+    wget
+    firefox
+    git
+    (pkgs.callPackage "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/pkgs/agenix.nix" {})
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
