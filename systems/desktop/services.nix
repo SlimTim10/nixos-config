@@ -46,7 +46,7 @@ in {
       folders = {
         "Sync" = { # Name of folder in Syncthing, also the folder ID
           path = "/home/tim/Sync"; # Which folder to add to Syncthing
-          devices = [ "phone" ]; # Which devices to share the folder with
+          devices = [ "phone" "laptop" ]; # Which devices to share the folder with
         };
       };
     };
