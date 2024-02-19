@@ -13,6 +13,25 @@ let
   lock-screen = pkgs.writeShellScriptBin "lock-screen" ''
     slock
   '';
+
+  # Swap ctrl and alt, and map capslock to alt
+  myKeyboardLayout = pkgs.writeText "xkb-layout" ''
+    ! Swap ctrl and alt, and map capslock to alt
+    clear lock
+    clear control
+    clear mod1
+    keycode 66 = Alt_L
+    keycode 37 = Alt_L Meta_L
+    keycode 105 = Alt_R Meta_R
+    keycode 64 = Control_L
+    keycode 108 = Control_R
+    add control = Control_L Control_R
+    add mod1 = Alt_L Meta_L
+  '';
+
+  set-keyboard-layout = pkgs.writeShellScriptBin "set-keyboard-layout" ''
+    ${pkgs.xorg.xmodmap}/bin/xmodmap ${myKeyboardLayout}
+  '';
     
 in
 {
@@ -27,5 +46,6 @@ in
     # misc tools
     hibernate
     lock-screen
+    set-keyboard-layout
   ];
 }
