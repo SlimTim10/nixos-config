@@ -42,11 +42,12 @@ in {
       devices = {
         "phone" = { id = "E7Q2U2F-6QQW3BO-ZEEURSH-A24UNTB-7FRH5HW-YB6IPPT-HR52YXY-ORQUGAX"; };
         "desktop" = { id = "WXSYB7W-7NFJOM3-TIV7ZLD-OAZMBVF-ILSYQR7-DYYBZHD-MCUHF4H-O6IYZAU"; };
+        "mercury" = { id = "SYOW4SS-XKWX2FY-5XT5LJK-WECQX2R-XCBF45P-5U65B5M-JT3SZD5-YDOX2QI"; };
       };
       folders = {
         "Sync" = { # Name of folder in Syncthing, also the folder ID
           path = "/home/tim/Sync"; # Which folder to add to Syncthing
-          devices = [ "phone" ]; # Which devices to share the folder with
+          devices = [ "phone" "desktop" "mercury" ]; # Which devices to share the folder with
         };
       };
     };
