@@ -35,6 +35,21 @@ let
     
 in
 {
+  systemd.user.services."hotplug-keyboard" = {
+    enable = true;
+    description = "Load my keyboard modifications";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = false;
+      ExecStart = "${set-keyboard-layout}/bin/set-keyboard-layout";
+    };
+  };
+  
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEMS=="usb", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-keyboard.service"
+  '';
+  
   # List packages installed in system profile.
   environment.systemPackages = with pkgs; [
     # essentials
