@@ -132,7 +132,8 @@ in {
     cabal2nix
     cabal-install
     nix-prefetch-git
-    ghc
+    # GHC included with libraries for compiling XMonad
+    (ghc.withPackages (pkgs: with pkgs; [ xmonad xmonad-extras xmonad-contrib ]))
     ghcid
     agda
     nodejs
