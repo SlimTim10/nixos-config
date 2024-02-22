@@ -11,7 +11,7 @@
  '(image-dired-thumb-size 250)
  '(image-dired-thumb-width 250)
  '(indent-tabs-mode nil)
- '(org-id-link-to-org-use-id t)
+ '(org-id-link-to-org-use-id 'create-if-interactive)
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
