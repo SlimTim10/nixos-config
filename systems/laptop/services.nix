@@ -16,6 +16,8 @@ let
     add mod1 = Alt_L Meta_L
   '';
 in {
+  networking.hostName = "tim-laptop";
+
   # XMonad
   services.xserver = {
     windowManager.xmonad = {

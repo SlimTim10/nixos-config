@@ -1,6 +1,8 @@
 { config, lib, pkgs, ... }:
 
 {
+  networking.hostName = "tim-desktop";
+
   imports = [
     ../../services/xmonad.nix
   ];

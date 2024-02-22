@@ -15,6 +15,8 @@ let
     ${pkgs.xorg.xrandr}/bin/xrandr | grep "HDMI-1 connected" &> /dev/null && connect || disconnect
   '';
 in {
+  networking.hostName = "tim-mercury";
+
   # XMonad
   services.xserver = {
     windowManager.xmonad = {

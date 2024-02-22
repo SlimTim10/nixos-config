@@ -18,7 +18,7 @@
   boot.loader.systemd-boot.configurationLimit = 10;
 
   # Networking
-  networking.hostName = "nixos"; # Define your hostname.
+  # networking.hostName = "nixos"; # Define your hostname.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   #networking.wireless.networks = {
   #  "networkname" = {
