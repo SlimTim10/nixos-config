@@ -17,16 +17,9 @@ let
 in {
   networking.hostName = "tim-mercury";
 
-  # XMonad
-  services.xserver = {
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      config = builtins.readFile ../../programs/xmonad/xmonad.hs;
-    };
-    displayManager.defaultSession = "none+xmonad";
-    autorun = true;
-  };
+  imports = [
+    ../../services/xmonad.nix
+  ];
 
   # Syncthing
   services.syncthing = {

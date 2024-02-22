@@ -18,19 +18,9 @@ let
 in {
   networking.hostName = "tim-laptop";
 
-  # XMonad
-  services.xserver = {
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      config = builtins.readFile ../../programs/xmonad/xmonad.hs;
-    };
-    displayManager.defaultSession = "none+xmonad";
-    autorun = true;
-  };
-
-  # Use my keymap
-  services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
+  imports = [
+    ../../services/xmonad.nix
+  ];
 
   # Syncthing
   services.syncthing = {
