@@ -1,19 +1,18 @@
 { config, lib, pkgs, ... }:
 
 let
-  # Swap ctrl and alt, and map capslock to alt
-  myCustomLayout = pkgs.writeText "xkb-layout" ''
-    ! Swap ctrl and alt, and map capslock to alt
-    clear lock
-    clear control
-    clear mod1
-    keycode 66 = Alt_L
-    keycode 37 = Alt_L Meta_L
-    keycode 105 = Alt_R Meta_R
-    keycode 64 = Control_L
-    keycode 108 = Control_R
-    add control = Control_L Control_R
-    add mod1 = Alt_L Meta_L
+  set-screen-layout = pkgs.writeShellScript "set-screen-layout" ''
+    export DISPLAY=:0
+
+    function connect(){
+        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --off --output HDMI-1 --primary
+    }
+
+    function disconnect(){
+        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --auto --primary
+    }
+
+    ${pkgs.xorg.xrandr}/bin/xrandr | grep "HDMI-1 connected" &> /dev/null && connect || disconnect
   '';
 in {
   # XMonad
@@ -26,9 +25,6 @@ in {
     displayManager.defaultSession = "none+xmonad";
     autorun = true;
   };
-
-  # Use my keymap
-  services.xserver.displayManager.sessionCommands = "${pkgs.xorg.xmodmap}/bin/xmodmap ${myCustomLayout}";
 
   # Syncthing
   services.syncthing = {
@@ -63,6 +59,21 @@ in {
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
+
+  # External monitor
+  systemd.user.services."hotplug-hdmi" = {
+    enable = true;
+    description = "Load my screen layout";
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = false;
+      ExecStart = "${set-screen-layout}";
+    };
+  };
+  services.udev.extraRules = ''
+    ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm", ENV{DISPLAY}=":0", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-hdmi.service"
+  '';
 
   # Secrets
   age.identityPaths = [
