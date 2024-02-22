@@ -48,7 +48,7 @@ main = do
       -- Bring window by name search
       , ("M-S-s", PromptW.windowPrompt promptDef PromptW.Bring PromptW.allWindows)
       -- Go to emacs
-      , ("M-e", WindowGo.runOrRaise "emacs" (WindowGo.className =? "Emacs"))
+      , ("M-<Home>", WindowGo.runOrRaise "emacs" (WindowGo.className =? "Emacs"))
       -- Movement bindings like emacs
       , ("M-o", X.windows W.focusDown)
       , ("M-S-o", X.windows W.focusUp)
@@ -75,7 +75,7 @@ main = do
       -- Screenshot
       , ("<Print>", X.spawn "screenshot")
       -- Reflect layout horizontally
-      , ("M-r", X.sendMessage $ Toggle.Toggle Reflect.REFLECTX)
+      , ("M-\\", X.sendMessage $ Toggle.Toggle Reflect.REFLECTX)
       -- Split into two screens
       , ("M-S-<Space>", LayoutScreens.layoutScreens 2 (TwoPane.TwoPane 0.5 0.5))
       -- Reset the screen configuration

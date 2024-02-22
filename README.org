@@ -8,25 +8,28 @@ Keys:
 - C = Ctrl
 - S = Shift
 
-| Key           | Action                     | Program(s)           |
-|---------------+----------------------------+----------------------|
-| W-p           | Launch dmenu (run program) | XMonad               |
-| W-x           | Lock screen                | XMonad / lock-screen |
-| W-space       | Rotate window layout       | XMonad               |
-| W-b           | Toggle xmobar              | XMonad / xmobar      |
-| W-f           | Full screen layout         | XMonad               |
-| W-o / W-j     | Focus next window          | XMonad               |
-| W-S-o / W-k   | Focus prev window          | XMonad               |
-| W-S-j / W-S-k | Shift window               | XMonad               |
-| W-h / W-l     | Resize window              | XMonad               |
-| W-s           | Search window              | XMonad               |
-| W-[1..9]      | Select workspace           | XMonad               |
-| W-=           | Select/create workspace    | XMonad               |
-| W-S-=         | Move window to workspace   | XMonad               |
-| W-S-[1..9]    | Move window to workspace   | XMonad               |
-| W-z / W-/     | Select prev workspace      | XMonad               |
-| W-C-M--       | Delete workspace           | XMonad               |
-| W-e           | Focus Emacs                | XMonad               |
+| Key         | Action                     | Program(s)          |
+|-------------+---------------------------+--------------------|
+| W-p         | Launch dmenu (run program) | XMonad            |
+| W-x         | Lock screen                | XMonad / lock-screen |
+| W-space     | Rotate window layout        | XMonad            |
+| W-b         | Toggle xmobar             | XMonad / xmobar    |
+| W-f         | Full screen layout           | XMonad            |
+| W-o / W-j     | Focus next window          | XMonad            |
+| W-S-o / W-k  | Focus prev window          | XMonad            |
+| W-S-j / W-S-k | Shift window               | XMonad            |
+| W-h / W-l    | Resize window              | XMonad            |
+| W-s         | Search window             | XMonad            |
+| W-[1..9]      | Select workspace           | XMonad            |
+| W-=         | Select/create workspace     | XMonad            |
+| W-S-=       | Move window to workspace  | XMonad            |
+| W-S-[1..9]    | Move window to workspace  | XMonad            |
+| W-z / W-/     | Select prev workspace       | XMonad            |
+| W-C-M--     | Delete workspace           | XMonad            |
+| W-[w,e,r]    | Select screen               | XMonad            |
+| W-S-[w,e,r]   | Move window to screen      | XMonad            |
+| W-home     | Focus Emacs               | XMonad            |
+| W-\          | Reflect layout horizontally    | XMonad            |
 
 ** Installation
 
