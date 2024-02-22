@@ -33,13 +33,6 @@
   # Set your time zone.
   time.timeZone = "America/Toronto";
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-  networking.interfaces.enp38s0.useDHCP = true;
-  networking.interfaces.wlo1.useDHCP = true;
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
   console = {
@@ -79,7 +72,7 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.tim = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" "audio" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "audio" ];
     home = "/home/tim";
   };
 
