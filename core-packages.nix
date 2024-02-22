@@ -48,6 +48,7 @@ in
   
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEMS=="usb", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-keyboard.service"
+    ACTION=="add", SUBSYSTEMS=="bluetooth", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-keyboard.service"
   '';
   
   # List packages installed in system profile.
