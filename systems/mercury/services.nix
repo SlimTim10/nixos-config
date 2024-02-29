@@ -14,6 +14,14 @@ let
 
     ${pkgs.xorg.xrandr}/bin/xrandr | grep "HDMI-1 connected" &> /dev/null && connect || disconnect
   '';
+
+  mercury = import "${
+    builtins.fetchGit {
+      url = "git@github.com:MercuryTechnologies/nixos-configuration.git";
+      ref = "main";
+      rev = "8d1b65f5640678e1503c69daf6e511ac2d37688c";
+    }
+  }/nixos-modules";
 in {
   networking.hostName = "tim-mercury";
 
@@ -26,6 +34,8 @@ in {
 
   imports = [
     ../../services/xmonad.nix
+    ./certs
+    mercury
   ];
 
   # Syncthing
@@ -87,4 +97,18 @@ in {
     owner = "tim";
     group = "users";
   };
+
+  mercury = {
+    # Enable the CA cert used for internal resources
+    internalCertificateAuthority.enable = true;
+
+    # Enable services required for MWB development (Postgres)
+    mwbDevelopment.enable = true;
+
+    # Enable the internal Nix cache
+    nixCache.enable = true;
+  };
+
+  # Tailscale
+  services.tailscale.enable = true;
 }

@@ -57,6 +57,17 @@ in {
       pbcopy = "xclip -selection clipboard";
       cp = "rsync -avhP";
     };
+    bashrcExtra = ''
+        if command -v direnv >/dev/null; then
+            eval "$(direnv hook bash)"
+        fi
+    '';
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true; # see note on other shells below
+    nix-direnv.enable = true;
   };
 
   programs.git = {
@@ -137,6 +148,7 @@ in {
     ghcid
     agda
     nodejs
+    gitleaks
 
     # accounting
     hledger
