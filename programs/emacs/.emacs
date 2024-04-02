@@ -793,7 +793,7 @@ behavior added."
   (envrc-global-mode))
 
 ;; agda
-;; (use-package agda2
+;; (use-package agda2-mode
 ;;   :preface
 ;;   (defun my/agda-mode ()
 ;;     "Try to load agda2-mode bundled with available agda version."
