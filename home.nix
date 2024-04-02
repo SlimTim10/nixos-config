@@ -146,8 +146,10 @@ in {
     # GHC included with libraries for compiling XMonad
     (ghc.withPackages (pkgs: with pkgs; [ xmonad xmonad-extras xmonad-contrib ]))
     ghcid
+    agda
     nodejs
     gitleaks
+    direnv
 
     # accounting
     hledger
