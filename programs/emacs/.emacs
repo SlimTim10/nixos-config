@@ -793,22 +793,22 @@ behavior added."
   (envrc-global-mode))
 
 ;; agda
-(use-package agda2-mode
-  :preface
-  (defun my/agda-mode ()
-    "Try to load agda2-mode bundled with available agda version."
-    (progn
-      (when (executable-find "agda-mode")
-	    (load-file (let ((coding-system-for-read 'utf-8))
-                     (shell-command-to-string "agda-mode locate"))))
-      (agda2-mode)))
-  :ensure t
-  :mode
-  (("\\.agda\\'" . my/agda-mode)
-   ("\\.l?agda.md\\'" . my/agda-mode))
-  :config
-  (advice-add 'agda2-mode :around #'envrc-propagate-environment)
-  (advice-add 'my/agda-mode :around #'envrc-propagate-environment))
+;; (use-package agda2
+;;   :preface
+;;   (defun my/agda-mode ()
+;;     "Try to load agda2-mode bundled with available agda version."
+;;     (progn
+;;       (when (executable-find "agda-mode")
+;; 	    (load-file (let ((coding-system-for-read 'utf-8))
+;;                      (shell-command-to-string "agda-mode locate"))))
+;;       (agda2-mode)))
+;;   :ensure t
+;;   :mode
+;;   (("\\.agda\\'" . my/agda-mode)
+;;    ("\\.l?agda.md\\'" . my/agda-mode))
+;;   :config
+;;   (advice-add 'agda2-mode :around #'envrc-propagate-environment)
+;;   (advice-add 'my/agda-mode :around #'envrc-propagate-environment))
 
 ;; View PDFs
 ;; Installing it with use-package doesn't work. Install it using package-install, then run pdf-tools-install.
