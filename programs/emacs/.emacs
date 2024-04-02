@@ -803,11 +803,9 @@ behavior added."
                      (shell-command-to-string "agda-mode locate"))))
       (agda2-mode)))
   :ensure t
-
   :mode
   (("\\.agda\\'" . my/agda-mode)
    ("\\.l?agda.md\\'" . my/agda-mode))
-
   :config
   (advice-add 'agda2-mode :around #'envrc-propagate-environment)
   (advice-add 'my/agda-mode :around #'envrc-propagate-environment))
