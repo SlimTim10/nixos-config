@@ -121,6 +121,7 @@
           inherit system;
           inherit specialArgs;
           modules = modules ++ [
+            ./systems/mercury/cache.nix
             ./systems/mercury/hardware.nix
             ./systems/mercury/hardware-configuration.nix
             ./systems/mercury/services.nix
