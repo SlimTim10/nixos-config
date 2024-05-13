@@ -18,7 +18,7 @@ let
   
   # Launch firefox with Toronto weather forecast
   weather-forecast = pkgs.writeShellScriptBin "weather-forecast" ''
-    firefox --new-window https://weather.gc.ca/city/pages/on-143_metric_e.html
+    firefox --new-window https://www.wunderground.com/hourly/ca/toronto/ITORON152
   '';
   
   # Take a screenshot (interactive selection) and copy the selection to the clipboard
