@@ -25,6 +25,11 @@
       url = "github:SlimTim10/easy-invoice-maker";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    kolide = {
+      url = "github:kolide/nix-agent/main";
+      inputs.nixpkgs.follows = "nixpkgs"; 
+    };
   };
 
   outputs =
@@ -33,6 +38,7 @@
     , home-manager
     , agenix
     , easy-invoice-maker
+    , kolide
     , ...
     }@inputs:
     let
@@ -118,6 +124,7 @@
             ./systems/mercury/hardware.nix
             ./systems/mercury/hardware-configuration.nix
             ./systems/mercury/services.nix
+            kolide.nixosModules.kolide-launcher
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
