@@ -182,6 +182,7 @@ in {
     screenshot # uses maim (bind to PrtSc key)
     libreoffice # for various writing formats
     ripgrep # grep alternative
+    trash-cli # command-line trash management
   ];
 
   # This value determines the home Manager release that your
