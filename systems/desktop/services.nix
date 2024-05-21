@@ -14,16 +14,11 @@
 
   imports = [
     ../../services/xmonad.nix
+    ../../services/syncthing.nix
   ];
 
   # Syncthing
   services.syncthing = {
-    enable = true;
-    user = "tim";
-    dataDir = "/home/tim/Sync";
-    configDir = "/home/tim/.config/syncthing";
-    overrideDevices = true; # overrides any devices added or deleted through the WebUI
-    overrideFolders = true; # overrides any folders added or deleted through the WebUI
     settings = {
       devices = {
         "phone" = { id = "E7Q2U2F-6QQW3BO-ZEEURSH-A24UNTB-7FRH5HW-YB6IPPT-HR52YXY-ORQUGAX"; };
@@ -31,8 +26,7 @@
         "mercury" = { id = "SYOW4SS-XKWX2FY-5XT5LJK-WECQX2R-XCBF45P-5U65B5M-JT3SZD5-YDOX2QI"; };
       };
       folders = {
-        "Sync" = { # Name of folder in Syncthing, also the folder ID
-          path = "/home/tim/Sync"; # Which folder to add to Syncthing
+        "Sync" = {
           devices = [ "phone" "laptop" "mercury" ]; # Which devices to share the folder with
         };
       };
