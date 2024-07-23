@@ -577,11 +577,12 @@ Version 2019-11-04 2021-02-16"
         ))
 (setq
  org-file-apps
- '((auto-mode . emacs)
-   ("\\.x?html?\\'" . default)
-   ("\\.pdf\\'" . default)
-   ("\\.mp4\\'" . default)
-   ("\\.jpg\\'" . default)))
+ '(("pdf" . default)
+   ("jpg" . default)
+   ("svg" . default)
+   ("txt" . emacs)
+   (auto-mode . emacs)
+   (t . "xdg-open %s")))
 (setq org-goto-interface 'outline-path-completion)
 (setq org-refile-use-outline-path t)
 (setq org-outline-path-complete-in-steps nil) ; work nicely with ivy
