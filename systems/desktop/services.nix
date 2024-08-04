@@ -15,6 +15,7 @@
   imports = [
     ../../services/xmonad.nix
     ../../services/syncthing.nix
+    ../../services/plex.nix
   ];
 
   # Syncthing
