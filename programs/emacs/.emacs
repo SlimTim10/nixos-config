@@ -418,6 +418,19 @@
   )
 (use-package dired-subtree :ensure t :after dired)
 
+;; dired-rsync
+(use-package dired-rsync
+  :bind
+  (:map
+   dired-mode-map
+   ("C-c C-r" . dired-rsync)))
+;; dired-rsync-transient wraps the command in a magit-like transient interface allowing you to tweaks the parameters for your call.
+(use-package dired-rsync-transient
+  :bind
+  (:map
+   dired-mode-map
+   ("C-c C-x" . dired-rsync-transient)))
+
 (defun xah-open-in-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
 When called in emacs lisp, if @fname is given, open that.
