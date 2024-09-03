@@ -30,6 +30,7 @@ let
   '';
 
   set-keyboard-layout = pkgs.writeShellScriptBin "set-keyboard-layout" ''
+    udevadm settle # Wait for all device events to be processed
     ${pkgs.xorg.xmodmap}/bin/xmodmap ${myKeyboardLayout}
   '';
     
@@ -42,13 +43,17 @@ in
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = false;
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2"; # Delay start by 2 seconds
       ExecStart = "${set-keyboard-layout}/bin/set-keyboard-layout";
+      Restart = "on-failure";
+      TimeoutStartSec = 2;
+      RestartSec = 2; # Wait 2 seconds before attempting to restart
     };
   };
   
   services.udev.extraRules = ''
-    ACTION=="add", SUBSYSTEMS=="usb", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-keyboard.service"
-    ACTION=="add", SUBSYSTEMS=="bluetooth", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-keyboard.service"
+    ACTION=="add|change", SUBSYSTEMS=="usb", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-keyboard.service"
+    ACTION=="add|change", SUBSYSTEMS=="bluetooth", TAG+="systemd", ENV{SYSTEMD_USER_WANTS}+="hotplug-keyboard.service"
   '';
   
   # List packages installed in system profile.
