@@ -171,6 +171,10 @@ in {
     lutris
     wineWowPackages.stable
 
+    # minecraft
+    unstable.prismlauncher
+    unstable.jdk8_headless
+
     # my packages
     flakePkgs.easy-invoice-maker
 
