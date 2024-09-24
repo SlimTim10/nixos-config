@@ -122,7 +122,7 @@ Or search from terminal:
 $ nix search nixpkgs hello
 #+end_example
 
-To install a package for the user ~tim~, add it to ~./home.nix~.
+To install a package for the user ~tim~, add it to ~./home.nix~. Use ~nixpkgs-unstable~ for packages that are intended to be frequently updated (kept up-to-date).
 
 To install a package in an ephemeral shell:
 
