@@ -130,10 +130,10 @@ in {
     thunderbird
 
     # web browsing
-    firefox # main web browser
+    unstable.firefox # main web browser
     weather-forecast # shortcut for weather page
     google-chrome # for dev work
-    freetube # open source YouTube client
+    unstable.freetube # open source YouTube client
 
     # music and video players
     vlc
