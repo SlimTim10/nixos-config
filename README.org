@@ -37,33 +37,33 @@ Keys:
 
 Before ~nixos-install~, use ~./initial-configuration.nix~ as configuration.nix. This enables networking and sets up a basic user. After ~nixos-install~, set a password for user ~tim~:
 
-#+begin_src sh
+#+begin_example
 $ passwd tim
-#+end_src
+#+end_example
 
 *** From new NixOS installation
 
-#+begin_src sh
+#+begin_example
 $ git clone git@github.com:SlimTim10/nixos-config.git /home/tim/.nix-config
 $ cd ~/.nix-config
-#+end_src
+#+end_example
 
 Create new system config in ~./systems~ based on ~./systems/desktop~.
 
-#+begin_src sh
+#+begin_example
 $ sudo nixos-rebuild switch --flake .#this-system
-#+end_src
+#+end_example
 (Replace ~this-system~ with your new system's name.)
 
 ** Set up auto mounting external drive
 
-#+begin_src sh
+#+begin_example
 $ sudo fdisk -l # find the drive
 $ sudo mkdir -p /mnt/external-hdd
 $ sudo mount /dev/sdx1 /mnt/external-hdd # replace sdx1 with the found drive
 $ sudo mount -t ntfs -o umask=000 /dev/sdx1 /mnt/external-hdd # for NTFS-formatted drive, full R/W permission (-o umask=000 may not be needed since adding support for NTFS)
 $ sudo nixos-generate-config # updates /etc/nixos/hardware-configuration.nix
-#+end_src
+#+end_example
 
 Copy contents of ~/etc/nixos/hardware-configuration.nix~ to ~./systems/<this-system>/hardware-configuration.nix~.
 
@@ -71,22 +71,22 @@ Copy contents of ~/etc/nixos/hardware-configuration.nix~ to ~./systems/<this-sys
 
 Do garbage collection (delete unreachable paths in the Nix store):
 
-#+begin_src sh
+#+begin_example
 $ nix store gc --debug
-#+end_src
+#+end_example
 (This is the recommended way for a flake-based config.)
 
 Delete all old generations of profiles prior to deleting unreachable store objects:
 
-#+begin_src sh
+#+begin_example
 $ nix-collect-garbage -d
-#+end_src
+#+end_example
 
 You can remove all but the current generation with:
 
-#+begin_src sh
+#+begin_example
 $ sudo nix-collect-garbage -d
-#+end_src
+#+end_example
 
 More info
 - https://nixos.wiki/wiki/Storage_optimization
@@ -110,7 +110,7 @@ More info
 
 ~./systems~: Configurations for separate systems, which could be separate physical machines or virtual systems (currently used for separate physical machines). Includes hardware configurations and software services.
 
-** Installing, removing, and updating packages (programs)
+** Installing packages (programs)
 
 To find a package and its name, search at:
 
@@ -118,57 +118,72 @@ https://search.nixos.org/packages
 
 Or search from terminal:
 
-#+begin_src sh
+#+begin_example
 $ nix search nixpkgs hello
-#+end_src
+#+end_example
 
 To install a package for the user ~tim~, add it to ~./home.nix~.
 
 To install a package in an ephemeral shell:
 
-#+begin_src sh
+#+begin_example
 $ nix shell nixpkgs#hello
 $ hello
 $ exit
-#+end_src
+#+end_example
 
 Or, install from a specific nixpkgs version, like unstable:
 
-#+begin_src sh
+#+begin_example
 $ nix shell github:nixos/nixpkgs/nixpkgs-unstable#hello
 $ hello
 $ exit
-#+end_src
+#+end_example
 
 For an insecure package:
 
-#+begin_src sh
+#+begin_example
 $ NIXPKGS_ALLOW_INSECURE=1 nix shell nixpkgs#hello --impure
 $ hello
 $ exit
-#+end_src
+#+end_example
 
-To delete a package, find it in the nix store and try using these commands:
+** Updating packages
 
-#+begin_src sh
-$ ls /nix/store | rg solitaire
-$ nix-store --query --roots /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1.drv
-$ sudo nix store delete /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1
-#+end_src
+To update all packages from the ~nixpkgs-unstable~ input:
 
-To update ~./flake.lock~ for all inputs in ~./flake.nix~:
+#+begin_example
+$ nix flake lock --update-input nixpkgs-unstable
+$ ./nixos-rebuild-desktop.sh
+#+end_example
 
-#+begin_src sh
+To update *all packages*:
+(updates ~./flake.lock~ for all inputs in ~./flake.nix~)
+
+#+begin_example
 $ nix flake update
-$ sudo nixos-rebuild switch --flake .#desktop
-#+end_src
+$ ./nixos-rebuild-desktop.sh
+#+end_example
 
 To update a specific input flake, for example ~easy-invoice-maker~:
 
-#+begin_src sh
+#+begin_example
 $ nix flake lock --update-input easy-invoice-maker
-$ sudo nixos-rebuild switch --flake .#desktop
-#+end_src
+$ ./nixos-rebuild-desktop.sh
+#+end_example
+
+
+** Removing packages
+
+Simply remove the package from ~home.nix~ or wherever it's coming from and rebuild.
+
+To manually delete a stubborn package, find it in the nix store and try using these commands:
+
+#+begin_example
+$ ls /nix/store | rg solitaire
+$ nix-store --query --roots /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1.drv
+$ sudo nix store delete /nix/store/17rr89knzpnk3hg3cb8fw63qw5lglqxk-tty-solitaire-1.3.1
+#+end_example
 
 ** Networking
 
@@ -178,12 +193,12 @@ Use nmtui (or nmcli) from command line
 
 Use ~jmtpfs~ to mount the device, then use ~rsync~ as root.
 
-#+begin_src
+#+begin_example
 $ jmtpfs /media
 $ cd "/media/Internal shared storage/DCIM/Camera"
 $ sudo rsync -avhP --ignore-existing IMG_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
 $ sudo rsync -avhP --ignore-existing VID_2023* /mnt/external-hdd/data/Photos\ and\ Videos/2023/misc/
-#+end_src
+#+end_example
 
 See https://nixos.wiki/wiki/MTP.
 
@@ -191,7 +206,7 @@ See https://nixos.wiki/wiki/MTP.
 
 Sync drives, deleting files in destination that are not in source.
 
-#+begin_src sh
+#+begin_example
 $ sudo fdisk -l
 $ sudo mount /dev/sdx1 /media/
 $ git clone git@github.com:SlimTim10/nixos-config.git /media/.nix-config
@@ -200,7 +215,7 @@ $ git pull
 $ rsync -avhPW --delete --compress-level=0 /home/tim/Sync/ /mnt/external-hdd/data/Backups/Sync/
 $ rsync -avhPW --delete --compress-level=0 /mnt/external-hdd/data/ /media/data/
 $ rsync -avhPW --delete --compress-level=0 '/mnt/external-hdd/Zoom Recordings Archive/' '/media/Zoom Recordings Archive/'
-#+end_src
+#+end_example
 
 ** Secrets management
 
@@ -210,10 +225,10 @@ Uses [[https://github.com/ryantm/agenix][agenix]] CLI tool with the ~./secrets/s
 
 1. Create a secret file:
    
-   #+begin_src sh
+   #+begin_example
    $ cd secrets
    $ agenix -e syncthingApiKey.age
-   #+end_src
+   #+end_example
    
    It will open a temporary file in the app configured in your $EDITOR environment variable. When you save that file its content will be encrypted with all the public keys mentioned in the ~./secrets/secrets.nix~ file.
 
@@ -263,11 +278,11 @@ Uses [[https://github.com/ryantm/agenix][agenix]] CLI tool with the ~./secrets/s
 
 *** If XMonad fails to start or recompile, try using a shell that has the required dependencies:
 
-#+begin_src sh
+#+begin_example
 $ nix-shell -p "ghc.withPackages (pkgs: with pkgs; [ xmonad xmonad-extras xmonad-contrib ])"
 $ xmonad --recompile
 $ xmonad --restart
-#+end_src
+#+end_example
 
 *** Classic Nix commands replaced by flakes
 
