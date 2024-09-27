@@ -22,4 +22,10 @@ in {
     silver-searcher # ag (grep alternative)
     emacsPackages.agda2-mode
   ];
+
+  # Run Emacs as a daemon
+  services.emacs = {
+    enable = true;
+    package = myEmacs;
+  };
 }
