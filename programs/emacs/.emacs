@@ -661,6 +661,7 @@ Version 2019-11-04 2021-02-16"
   :init
   (setq avy-keys '(?s ?d ?f ?g ?h ?j ?k ?l))
   (setq avy-style 'at-full)
+  (setq avy-all-windows 'all-frames)
   :config
   (add-to-list 'avy-orders-alist '(avy-goto-word-1 . avy-order-closest))
   (global-set-key (kbd "C-.") 'avy-goto-word-1)
