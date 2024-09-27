@@ -48,7 +48,7 @@ main = do
       -- Bring window by name search
       , ("M-S-s", PromptW.windowPrompt promptDef PromptW.Bring PromptW.allWindows)
       -- Spawn emacs
-      , ("M-e" , X.spawn "emacsclient -c") -- This replaces a default physical screen keybinding
+      , ("M-e" , X.spawn "emacsclient -c -n -e '(switch-to-buffer nil)'") -- This replaces a default physical screen keybinding
       -- Go to first emacs frame
       , ("M-<Home>", WindowGo.runOrRaise "emacs" (WindowGo.className =? "Emacs"))
       -- Movement bindings like emacs

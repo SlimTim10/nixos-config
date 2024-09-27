@@ -166,6 +166,11 @@
   (desktop-save-mode 1) ; Auto-save
   )
 
+;; Frames only mode
+(use-package frames-only-mode
+  :config
+  (frames-only-mode 1))
+
 ;; eyebrowse
 ;; (eyebrowse-mode t)
 
