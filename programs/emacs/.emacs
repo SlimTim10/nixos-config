@@ -689,6 +689,10 @@ Version 2019-11-04 2021-02-16"
   (setq projectile-indexing-method 'alien)
   :config
   (projectile-global-mode)
+  :bind
+  (:map
+   projectile-mode-map
+   ("C-x p s" . projectile-ripgrep))
   )
 
 ;; Eshell
