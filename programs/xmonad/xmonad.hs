@@ -17,6 +17,8 @@ import qualified XMonad.Layout.Reflect as Reflect
 import qualified XMonad.Layout.MultiToggle as Toggle
 import qualified XMonad.Layout.LayoutScreens as LayoutScreens
 import qualified XMonad.Layout.ThreeColumns as ThreeColumns
+import qualified XMonad.Actions.FindEmptyWorkspace as FindEmptyWorkspace
+import qualified XMonad.Actions.EasyMotion as EasyMotion
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -83,6 +85,10 @@ main = do
       , ("M-S-<Space>", LayoutScreens.layoutScreens 2 (TwoPane.TwoPane 0.5 0.5))
       -- Reset the screen configuration
       , ("M-<Esc>", X.rescreen)
+      -- Find and view an empty workspace
+      , ("M-0", FindEmptyWorkspace.viewEmptyWorkspace)
+      -- Focus a window by visible selection
+      , ("M-.", EasyMotion.selectWindow X.def >>= (`X.whenJust` X.windows . W.focusWindow))
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
