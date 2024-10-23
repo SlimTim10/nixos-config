@@ -16,6 +16,7 @@ import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import qualified XMonad.Layout.Reflect as Reflect
 import qualified XMonad.Layout.MultiToggle as Toggle
 import qualified XMonad.Layout.LayoutScreens as LayoutScreens
+import qualified XMonad.Layout.ThreeColumns as ThreeColumns
 import qualified Data.List as L
 import qualified Data.Char as C
 import qualified Data.Map as M
@@ -69,7 +70,7 @@ main = do
       , ("M-<Up>", X.sendMessage $ X.JumpToLayout "Full")
       , ("M-<Right>", X.sendMessage $ X.JumpToLayout "TwoPane")
       , ("M-<Down>", X.sendMessage $ X.JumpToLayout "Tall")
-      , ("M-<Left>", X.sendMessage $ X.JumpToLayout "Mirror Tall")
+      , ("M-<Left>", X.sendMessage $ X.JumpToLayout "ThreeCol")
       -- Audio buttons
       , ("<XF86AudioMute>", Vol.toggleMute >>= (B.bool (showVolume "mute") (showVolume "unmute")))
       , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showVolume . show . round)
@@ -121,7 +122,7 @@ myManageHook = X.composeAll
 myLayout =
   Toggle.mkToggle (Toggle.single Reflect.REFLECTX)
   $ Layout.smartBorders
-  $ tiled ||| X.Mirror tiled ||| twoPane ||| X.Full
+  $ tiled ||| threeCol ||| twoPane ||| X.Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled = X.Tall nmaster delta ratio
@@ -130,6 +131,9 @@ myLayout =
     -- The left window is always the master window,
     -- and the right is either the currently focused window or the second window in layout order.
     twoPane = TwoPane.TwoPane delta ratio
+
+    -- Three column layout with master window in the middle.
+    threeCol = ThreeColumns.ThreeColMid nmaster delta ratio
 
     -- The default number of windows in the master pane
     nmaster = 1
