@@ -20,7 +20,6 @@ in {
     myEmacs
     imagemagick # for image-dired in emacs
     silver-searcher # ag (grep alternative)
-    emacsPackages.agda2-mode
   ];
 
   # Run Emacs as a daemon
