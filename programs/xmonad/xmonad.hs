@@ -92,6 +92,9 @@ main = do
       , ("M-.", EasyMotion.selectWindow X.def >>= (`X.whenJust` X.windows . W.focusWindow))
       -- Bring up a 2D grid of the non-visible windows in the current workspace for selection
       , ("M-g", showNonVisibleWindows)
+      -- Increase or decrease number of windows in the master area. 
+      , ("M-[", X.sendMessage $ X.IncMasterN 1) -- %! Increment the number of windows in the master area
+      , ("M-]", X.sendMessage $ X.IncMasterN (-1)) -- %! Decrement the number of windows in the master area
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
