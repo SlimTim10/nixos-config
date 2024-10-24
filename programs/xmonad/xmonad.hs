@@ -1,5 +1,5 @@
 import qualified XMonad as X
-import XMonad ((.|.), (=?), (-->), (<+>), (|||))
+import XMonad (X, (.|.), (=?), (-->), (<+>), (|||))
 import qualified XMonad.Prompt as Prompt
 import qualified XMonad.Prompt.Window as PromptW
 import qualified XMonad.Layout.NoBorders as Layout
@@ -19,11 +19,12 @@ import qualified XMonad.Layout.LayoutScreens as LayoutScreens
 import qualified XMonad.Layout.ThreeColumns as ThreeColumns
 import qualified XMonad.Actions.FindEmptyWorkspace as FindEmptyWorkspace
 import qualified XMonad.Actions.EasyMotion as EasyMotion
+import qualified XMonad.Actions.GridSelect as GridSelect
 import qualified Data.List as L
 import qualified Data.Char as C
-import qualified Data.Map as M
 import qualified Data.Bool as B
-import Control.Monad ((>=>))
+import qualified Data.Foldable as Fold
+import Control.Monad ((>=>), void, forM)
 
 main :: IO ()
 main = do
@@ -89,6 +90,8 @@ main = do
       , ("M-0", FindEmptyWorkspace.viewEmptyWorkspace)
       -- Focus a window by visible selection
       , ("M-.", EasyMotion.selectWindow X.def >>= (`X.whenJust` X.windows . W.focusWindow))
+      -- Bring up a 2D grid of the non-visible windows in the current workspace for selection
+      , ("M-g", showNonVisibleWindows)
       ]
       -- mod-[1..9]       %! Switch to workspace N in the list of workspaces
       -- mod-shift-[1..9] %! Move client to workspace N in the list of workspaces
@@ -105,7 +108,27 @@ main = do
       }
     workspaces = ["1:main", "2:web", "3:media", "4:meeting"] ++ map show [5 .. 9]
 
-showVolume :: String -> X.X ()
+showNonVisibleWindows :: X ()
+showNonVisibleWindows = do
+  windows <- getNonVisibleWindows
+  windowPairs :: [(String, X.Window)] <- forM windows $ \w -> do
+    title <- X.runQuery X.title w
+    pure (title, w)
+  GridSelect.gridselect X.def windowPairs >>= (`X.whenJust` X.windows . W.focusWindow)
+
+getNonVisibleWindows :: X [X.Window]
+getNonVisibleWindows = do
+  X.XState { X.mapped = mappedWins, X.windowset = ws } <- X.get
+  let visibleWindows :: [X.Window] = Fold.toList mappedWins
+  currentScreen <- W.current <$> X.gets X.windowset
+  filter (not . (`elem` visibleWindows))
+    . W.integrate'
+    . W.stack
+    . W.workspace
+    . W.current
+    <$> X.gets X.windowset
+
+showVolume :: String -> X ()
 showVolume = Dzen.dzenConfig (Dzen.timeout 1 >=> centered)
   where
     centered =
@@ -113,7 +136,6 @@ showVolume = Dzen.dzenConfig (Dzen.timeout 1 >=> centered)
       >=> Dzen.font "-*-helvetica-*-r-*-*-64-*-*-*-*-*-*-*"
       >=> Dzen.addArgs ["-fg", "#80c0ff"]
       >=> Dzen.addArgs ["-bg", "#000040"]
-
 
 myFuzzyFinder :: String -> String -> Bool
 myFuzzyFinder a b = map C.toLower a `L.isInfixOf` map C.toLower b
