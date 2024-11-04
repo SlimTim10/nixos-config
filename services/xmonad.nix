@@ -8,9 +8,9 @@
       enableContribAndExtras = true;
       config = builtins.readFile ../programs/xmonad/xmonad.hs;
     };
-    displayManager.defaultSession = "none+xmonad";
     autorun = true;
   };
+  services.displayManager.defaultSession = "none+xmonad";
 
   # Use my keymap
   services.xserver.displayManager.sessionCommands = "set-keyboard-layout";

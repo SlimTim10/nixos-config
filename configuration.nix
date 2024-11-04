@@ -26,6 +26,7 @@
   #  };
   #};
   networking.networkmanager.enable = true;
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # Save space via hardlinking store files (recommended for SSDs)
   nix.settings.auto-optimise-store = true;
@@ -44,7 +45,7 @@
   services.xserver.enable = true;
       
   # Configure keymap in X11
-  services.xserver.layout = "us";
+  services.xserver.xkb.layout = "us";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

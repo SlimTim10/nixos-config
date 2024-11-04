@@ -2,11 +2,11 @@
   description = "NixOS configuration of Tim Johns";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.11";
+      url = "github:nix-community/home-manager/release-24.05";
       # 'follows' is the inheritance syntax within inputs.
       # Here, it ensures that home-manager's 'inputs.nixpkgs' aligns with 
       # the current flake's inputs.nixpkgs,

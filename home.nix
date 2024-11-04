@@ -156,7 +156,7 @@ in {
     hledger-web # web UI
 
     # social/work
-    zoom-us # video meetings
+    unstable.zoom-us # video meetings
     unstable.slack # HiDPI resolution fix: --force-device-scale-factor=1.5
 
     # for Android
@@ -176,7 +176,7 @@ in {
     unstable.jdk8_headless
 
     # my packages
-    flakePkgs.easy-invoice-maker
+    # flakePkgs.easy-invoice-maker
 
     # misc
     deluge # torrent client
