@@ -858,6 +858,13 @@ behavior added."
   :ensure t
   :mode ("\\.md\\'" . gfm-mode))
 
+;; Visual undo
+(use-package vundo
+  :bind (("C-x u" . vundo)
+         ("C-/" . undo-only)
+         ("C-?" . undo-redo))
+  :config
+  (setq vundo-glyph-alist vundo-ascii-symbols))
 
 
 ;; My custom keys
