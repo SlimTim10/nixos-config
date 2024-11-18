@@ -604,11 +604,12 @@ Version 2019-11-04 2021-02-16"
         ))
 (setq
  org-file-apps
- '(("pdf" . default)
+ '((auto-mode . emacs)
+   (directory . emacs)
+   ("pdf" . default)
    ("jpg" . default)
    ("svg" . default)
    ("txt" . emacs)
-   (auto-mode . emacs)
    (t . "xdg-open %s")))
 (setq org-goto-interface 'outline-path-completion)
 (setq org-refile-use-outline-path t)
