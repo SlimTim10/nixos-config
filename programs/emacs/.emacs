@@ -115,28 +115,6 @@
    ;; mode-line-misc-info
    mode-line-end-spaces))
 
-;; Windows only
-(when (eq system-type 'windows-nt)
-  ;; Set font
-  (add-to-list 'default-frame-alist
-			   '(font . "Lucida Sans-10:demibold"))
-  (setq delete-by-moving-to-trash t)
-  (load "dired-keys-win.el")
-  (defun explore-directory ()
-	"Open Windows Explorer at current directory."
-	(interactive)
-	(w32-shell-execute "open" default-directory))
-  (setq find-program "C:\\cygwin64\\bin\\find.exe")
-  ;; Set default font face for dired mode
-  (add-hook 'dired-mode-hook 'my-buffer-face-mode-fixed)
-  )
-
-;; OS X only
-(when (eq system-type 'darwin)
-  ;; Set font
-  (add-to-list 'default-frame-alist
-			   '(font . "Lucida Grande")))
-
 ;; gnu/linux only
 (when (eq system-type 'gnu/linux)
   (set-face-attribute 'default nil :family "DejaVu Serif" :height 140)
