@@ -212,7 +212,6 @@
 			(subword-mode 1)
 			(local-set-key (kbd "C-c C-f") 'forward-sexp)
 			(local-set-key (kbd "C-c C-b") 'backward-sexp)
-			;; (buffer-face-mode 1)
 			))
 
 ;; TypeScript programming
@@ -247,8 +246,7 @@
 			  (set (make-local-variable 'company-backends)
 				   '((php-extras-company company-dabbrev-code) company-capf company-files))
 			  (company-mode 1)
-			  (setq company-idle-delay 0)
-			  (buffer-face-mode 1)))
+			  (setq company-idle-delay 0)))
   )
 
 ;; Web programming
@@ -353,6 +351,23 @@
 
 ;; Set fonts
 (set-frame-font "Fira Code 14" nil t)
+(set-face-attribute 'default nil :font "Fira Code-14")
+(use-package ligature
+  :config
+  ;; Enable all Fira Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+                                       ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+                                       "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+                                       "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+                                       "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+                                       "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+                                       "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+                                       "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+                                       "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+                                       "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
 
 ;; Dired
 (require 'ls-lisp)
@@ -576,11 +591,6 @@ Version 2019-11-04 2021-02-16"
 (setq org-cycle-separator-lines 0)
 (setq org-catch-invisible-edits 'show-and-error)
 (setq org-log-into-drawer t)
-(custom-theme-set-faces
-   'user
-   '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
-   '(org-table ((t (:inherit fixed-pitch))))
-   '(org-formula ((t (:inherit fixed-pitch)))))
 (setq org-todo-keywords
  '((sequence "TODO" "DOING" "|" "DONE"))
  )
@@ -858,7 +868,4 @@ behavior added."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(mode-line ((t (:background "dim gray"))))
- '(mode-line-inactive ((t (:background nil :foreground "gray"))))
- '(org-formula ((t (:inherit fixed-pitch))))
- '(org-indent ((t (:inherit (org-hide fixed-pitch)))))
- '(org-table ((t (:inherit fixed-pitch)))))
+ '(mode-line-inactive ((t (:background nil :foreground "gray")))))
