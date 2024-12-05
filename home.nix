@@ -139,6 +139,9 @@ in {
     vlc
     spotify
 
+    # font
+    fira-code
+
     # programming/development
     cabal2nix
     cabal-install

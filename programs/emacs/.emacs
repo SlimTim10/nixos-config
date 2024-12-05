@@ -39,6 +39,7 @@
       `((".*" ,temporary-file-directory t)))
 (setq lock-file-name-transforms
       `((".*" ,temporary-file-directory t)))
+(setq delete-by-moving-to-trash t)
 (let ((default-directory "~/.emacs.d/lisp"))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path)
@@ -114,12 +115,6 @@
    mode-line-modes
    ;; mode-line-misc-info
    mode-line-end-spaces))
-
-;; gnu/linux only
-(when (eq system-type 'gnu/linux)
-  (set-face-attribute 'default nil :family "DejaVu Serif" :height 140)
-  (setq delete-by-moving-to-trash t)
-  )
 
 ;; Handle word wrapping
 (global-visual-line-mode 1)
@@ -357,28 +352,7 @@
 (global-set-key (kbd "M-L") (lambda () (interactive) (enlarge-window 1 t)))
 
 ;; Set fonts
-
-;; Use variable width font faces in current buffer
-(defun my-buffer-face-mode-variable ()
-  "Set font to a variable width (proportional) fonts in current buffer"
-  (interactive)
-  (setq buffer-face-mode-face '(:family "DejaVu Serif" :height 140))
-  (buffer-face-mode))
-
-;; Use monospaced font faces in current buffer
-(defun my-buffer-face-mode-fixed ()
-  "Sets a fixed width (monospace) font in current buffer"
-  (interactive)
-  (setq buffer-face-mode-face '(:family "DejaVu Sans Mono" :height 120))
-  (buffer-face-mode))
-
-;; Set default font faces for modes
-(my-buffer-face-mode-variable)
-(add-hook 'org-mode-hook 'my-buffer-face-mode-variable)
-(add-hook 'dired-mode-hook 'my-buffer-face-mode-fixed)
-(add-hook 'calendar-mode-hook 'my-buffer-face-mode-fixed)
-(add-hook 'org-agenda-mode-hook 'my-buffer-face-mode-fixed)
-(add-hook 'magit-mode-hook 'my-buffer-face-mode-fixed)
+(set-frame-font "Fira Code 14" nil t)
 
 ;; Dired
 (require 'ls-lisp)
