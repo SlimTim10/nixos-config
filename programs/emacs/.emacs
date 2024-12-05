@@ -60,9 +60,14 @@
 (setq global-auto-revert-non-file-buffers t)
 (setq auto-revert-verbose nil)
 
-;; Use the file system nofitications instead of polling
+;; Use file system notifications instead of polling
 (setq auto-revert-use-notify t)
 (setq auto-revert-avoid-polling t)
+;; OR:
+;; Use polling instead of file system notifications
+;; (setq auto-revert-use-notify nil)
+;; (setq auto-revert-avoid-polling nil)
+;; (setq auto-revert-interval 1) ; check for changes every second
 
 ;; Title
 (setq display-time-format "%l:%M %p  %a, %b %e, %Y")
