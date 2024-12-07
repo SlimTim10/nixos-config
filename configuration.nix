@@ -45,7 +45,7 @@
   services.xserver.enable = true;
       
   # Configure keymap in X11
-  services.xserver.xkb.layout = "us";
+  services.xserver.layout = "us";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

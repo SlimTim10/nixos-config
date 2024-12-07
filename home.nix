@@ -194,7 +194,6 @@ in {
     # misc
     deluge # torrent client
     xfce.thunar # graphical file manager
-    megasync # MEGA cloud storage
     xclip # clipboard help
     screenshot # uses maim (bind to PrtSc key)
     libreoffice # for various writing formats
