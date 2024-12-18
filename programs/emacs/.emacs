@@ -218,13 +218,6 @@
 (use-package typescript-ts-mode
   :mode (("\\.ts\\'" . typescript-ts-mode)
          ("\\.tsx\\'" . tsx-ts-mode)))
-(use-package apheleia
-  :ensure t
-  :defer t
-  :hook ((typescript-ts-mode . apheleia-mode)
-         (tsx-ts-mode . apheleia-mode)
-         (js-ts-mode . apheleia-mode)
-         (go-ts-mode . apheleia-mode)))
 
 ;; Python programming
 (add-hook 'python-mode-hook
