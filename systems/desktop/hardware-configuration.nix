@@ -21,15 +21,11 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/4E9F-1723";
       fsType = "vfat";
-    };
-
-  fileSystems."/media" =
-    { device = "systemd-1";
-      fsType = "autofs";
+      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/mnt/external-hdd" =
-    { device = "/dev/disk/by-uuid/ffe1e3ea-4c71-48dc-b063-80e7a127e0d7";
+    { device = "/dev/disk/by-uuid/4d0b2ca5-014b-46d8-8547-14d9fabed5e8";
       fsType = "ext4";
     };
 
@@ -43,6 +39,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.br-11be9c8687ec.useDHCP = lib.mkDefault true;
+  # networking.interfaces.br-bb5f98d47987.useDHCP = lib.mkDefault true;
   # networking.interfaces.br-c8e488edb830.useDHCP = lib.mkDefault true;
   # networking.interfaces.br-ffcab921686b.useDHCP = lib.mkDefault true;
   # networking.interfaces.docker0.useDHCP = lib.mkDefault true;
