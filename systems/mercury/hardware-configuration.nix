@@ -24,9 +24,13 @@
       options = [ "fmask=0077" "dmask=0077" ];
     };
 
+  # For hibernation
+  boot.kernelParams = ["resume_offset=100636672"];
+  boot.resumeDevice = "/dev/disk/by-uuid/d0703db9-192c-4c5c-a5e1-ccf0d9729586";
+  powerManagement.enable = true;
   swapDevices = [ {
     device = "/var/lib/swapfile";
-    size = 144*1024; # 128 GB RAM + 16 GB
+    size = 144*1024; # 128 GB (RAM size) + 16 GB (extra) = 144 GB
   } ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
