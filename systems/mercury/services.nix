@@ -79,6 +79,21 @@ in {
   };
   services.blueman.enable = true;
 
+  # Audio
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
+  # Install zoom via flatpak
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal ];
+  xdg.portal.config.common.default = [ "gtk" ];
+  services.flatpak.enable = true;
+
   # External monitor
   systemd.user.services."hotplug-hdmi" = {
     enable = true;
