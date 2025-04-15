@@ -10,12 +10,23 @@
 
   nixpkgs.config.allowUnfree = lib.mkForce true;
 
-  # Use the systemd-boot EFI boot loader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.useOSProber = true;
-  # Limit the number of generations to keep
-  boot.loader.systemd-boot.configurationLimit = 10;
+  boot = {
+    loader = {
+      systemd-boot = {
+        # Use the systemd-boot EFI boot loader
+        enable = true;
+        # Limit the number of generations to keep
+        configurationLimit = 10;
+      };
+      efi.canTouchEfiVariables = true;
+      grub = {
+        enable = true;
+        device = "nodev";
+        efiSupport = true;
+        useOSProber = true;
+      };
+    };
+  };
 
   # Networking
   # networking.hostName = "nixos"; # Define your hostname.

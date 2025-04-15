@@ -33,6 +33,9 @@
     size = 144*1024; # 128 GB (RAM size) + 16 GB (extra) = 144 GB
   } ];
 
+  # Full disk encryption
+  boot.initrd.luks.devices.cryptroot.device = "/dev/disk/by-uuid/d0703db9-192c-4c5c-a5e1-ccf0d9729586";
+
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
   # still possible to use this option, but it's recommended to use it in conjunction
