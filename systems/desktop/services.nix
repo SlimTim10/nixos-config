@@ -62,6 +62,24 @@
     # dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
   };
 
+  # Bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+    settings = {
+      General = {
+        Name = "Hello";
+        ControllerMode = "dual";
+        FastConnectable = "true";
+        Experimental = "true";
+      };
+      Policy = {
+        AutoEnable = "true";
+      };
+    };
+  };
+  services.blueman.enable = true;
+
   # Secrets
   age.identityPaths = [
     "/home/tim/.ssh/id_ed25519"
