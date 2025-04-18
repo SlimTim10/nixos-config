@@ -87,6 +87,8 @@ main = do
       , ("M-<Esc>", X.rescreen)
       -- Focus a window by visible selection
       , ("M-.", EasyMotion.selectWindow X.def >>= (`X.whenJust` X.windows . W.focusWindow))
+      -- Bind comma too, just so it doesn't do its default binding
+      , ("M-,", EasyMotion.selectWindow X.def >>= (`X.whenJust` X.windows . W.focusWindow))
       -- Bring up a 2D grid of the non-visible windows in the current workspace for selection
       , ("M-g", showNonVisibleWindows)
       -- Increase or decrease number of windows in the master area. 
