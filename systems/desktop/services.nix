@@ -63,15 +63,17 @@
   };
 
   # Bluetooth
+  # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/hardware/bluetooth.nix
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = true;
+    # See settings options: https://github.com/bluez/bluez/blob/master/src/main.conf
     settings = {
       General = {
         Name = "Hello";
         ControllerMode = "dual";
         FastConnectable = "true";
-        Experimental = "true";
+        # Experimental = "true";
       };
       Policy = {
         AutoEnable = "true";
