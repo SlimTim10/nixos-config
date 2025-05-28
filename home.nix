@@ -199,6 +199,8 @@ in {
     libreoffice # for various writing formats
     ripgrep # grep alternative
     trash-cli # command-line trash management
+    unzip
+    ffmpeg
   ];
 
   # This value determines the home Manager release that your
