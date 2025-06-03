@@ -72,8 +72,6 @@ in {
 
   programs.git = {
     enable = true;
-    userName = "tim";
-    userEmail = "slimtim10@gmail.com";
   };
 
   # For Haskell Reflex FRP

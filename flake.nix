@@ -80,7 +80,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.tim.imports = [ ./home.nix ];
+              home-manager.users.tim.imports = [ ./home.nix ./systems/desktop/home.nix ];
               home-manager.extraSpecialArgs = {
                 inherit nixpkgs-unstable;
                 inherit nixpkgs;
@@ -104,7 +104,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.tim.imports = [ ./home.nix ];
+              home-manager.users.tim.imports = [ ./home.nix ./systems/laptop/home.nix ];
               home-manager.extraSpecialArgs = {
                 inherit nixpkgs-unstable;
                 inherit nixpkgs;
@@ -130,7 +130,7 @@
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.users.tim.imports = [ ./home.nix ];
+              home-manager.users.tim.imports = [ ./home.nix ./systems/mercury/home.nix ];
               home-manager.extraSpecialArgs = {
                 inherit nixpkgs-unstable;
                 inherit nixpkgs;
