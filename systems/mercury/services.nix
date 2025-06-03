@@ -95,14 +95,16 @@ in {
   '';
 
   # Secrets
-  age.identityPaths = [
-    "/home/tim/.ssh/id_ed25519"
-  ];
-  age.secrets."syncthingApiKey" = {
-    file = ./secrets/syncthingApiKey.age;
-    mode = "700";
-    owner = "tim";
-    group = "users";
+  age = {
+    identityPaths = [ "/home/tim/.ssh/id_ed25519" ];
+    secrets = {
+      "syncthingApiKey" = {
+        file = ./secrets/syncthingApiKey.age;
+        mode = "700";
+        owner = "tim";
+        group = "users";
+      };
+    };
   };
 
   mercury = {
