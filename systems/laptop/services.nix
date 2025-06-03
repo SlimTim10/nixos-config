@@ -36,7 +36,7 @@ in {
       devices = {
         "phone" = { id = "E7Q2U2F-6QQW3BO-ZEEURSH-A24UNTB-7FRH5HW-YB6IPPT-HR52YXY-ORQUGAX"; };
         "desktop" = { id = "WXSYB7W-7NFJOM3-TIV7ZLD-OAZMBVF-ILSYQR7-DYYBZHD-MCUHF4H-O6IYZAU"; };
-        "mercury" = { id = "F535NQZ-MAWIC5V-F7JYDYO-X7JVPP6-ZRDATQV-4TUOGYR-72J77SM-LZEGSQC"; };
+        "mercury" = { id = "FDYSTDU-SJWNZS6-OMCBWY2-PBCTLTW-FYWXBQF-6JCQHES-JJUOGOB-5GVGMAI"; };
       };
       folders = {
         "Sync" = {
