@@ -167,7 +167,7 @@ in {
     hledger-web # web UI
 
     # social/work
-    unstable.zoom-us # video meetings
+    zoom-us # video meetings
     unstable.slack # HiDPI resolution fix: --force-device-scale-factor=1.5
 
     # for Android
