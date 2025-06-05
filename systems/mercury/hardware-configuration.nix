@@ -24,7 +24,10 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
-  swapDevices = [ ];
+  swapDevices = [ {
+    device = "/var/lib/swapfile";
+    size = 144*1024; # 128 GB RAM + 16 GB
+  } ];
 
   boot.initrd.luks.devices = {
     crypted = {
