@@ -24,6 +24,10 @@
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
+  # Enable hibernation
+  boot.kernelParams = ["resume_offset=163555328"];
+  boot.resumeDevice = "/dev/disk/by-uuid/b399909f-1b9a-4edf-9bdb-06a1feac213c";
+  powerManagement.enable = true;
   swapDevices = [ {
     device = "/var/lib/swapfile";
     size = 144*1024; # 128 GB RAM + 16 GB
