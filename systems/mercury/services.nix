@@ -5,14 +5,14 @@ let
     export DISPLAY=:0
 
     function connect(){
-        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --off --output HDMI-1 --auto --primary
+        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1-1 --off --output HDMI-0 --auto --primary
     }
 
     function disconnect(){
-        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --auto --primary --output HDMI-1 --off
+        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1-1 --auto --primary --output HDMI-0 --off
     }
 
-    ${pkgs.xorg.xrandr}/bin/xrandr | grep "HDMI-1 connected" &> /dev/null && connect || disconnect
+    ${pkgs.xorg.xrandr}/bin/xrandr | grep "HDMI-0 connected" &> /dev/null && connect || disconnect
   '';
 
   mercury = import "${
