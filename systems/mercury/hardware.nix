@@ -41,8 +41,10 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
-      # In clamshell mode, using PRIME Sync is likely to lead to better performance, external display support, etc., at the cost of potentially (but not always) lower battery life.
-      sync.enable = true;
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
 
       # Values found using `sudo lshw -c display`.
       intelBusId = "PCI:0:2:0";
