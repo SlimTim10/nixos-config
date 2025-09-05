@@ -1,5 +1,5 @@
 import qualified XMonad as X
-import XMonad (X, (.|.), (=?), (-->), (<+>), (|||))
+import XMonad (X, (=?), (-->), (<+>), (|||))
 import qualified XMonad.Prompt as Prompt
 import qualified XMonad.Prompt.Window as PromptW
 import qualified XMonad.Layout.NoBorders as Layout
@@ -11,7 +11,8 @@ import qualified XMonad.Util.EZConfig as EZConfig
 import qualified XMonad.Actions.CycleWS as CycleWS
 import qualified XMonad.Layout.TwoPane as TwoPane
 import qualified XMonad.Actions.Volume as Vol
-import qualified XMonad.Util.Dzen as Dzen -- display volume
+import qualified XMonad.Util.Dzen as Dzen
+import qualified XMonad.Util.Run as Run
 import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import qualified XMonad.Layout.Reflect as Reflect
 import qualified XMonad.Layout.MultiToggle as Toggle
@@ -24,6 +25,13 @@ import qualified Data.Char as C
 import qualified Data.Bool as B
 import qualified Data.Foldable as Fold
 import Control.Monad ((>=>), void, forM)
+import qualified Data.List.NonEmpty as NE
+import Data.List.NonEmpty (NonEmpty ((:|)))
+import qualified Data.Aeson as JSON
+import GHC.Generics (Generic)
+import Data.String.Conversions (cs)
+import qualified Control.Error as E
+import Control.Error.Util ((??), (!?))
 
 main :: IO ()
 main = do
@@ -74,9 +82,11 @@ main = do
       , ("M-<Down>", X.sendMessage $ X.JumpToLayout "Tall")
       , ("M-<Left>", X.sendMessage $ X.JumpToLayout "ThreeCol")
       -- Audio buttons
-      , ("<XF86AudioMute>", Vol.toggleMute >>= (B.bool (showVolume "mute") (showVolume "unmute")))
-      , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showVolume . show . round)
-      , ("<XF86AudioRaiseVolume>", Vol.raiseVolume 5 >>= showVolume . show . round)
+      , ("<XF86AudioMute>", Vol.toggleMute >>= (B.bool (showCenter "mute") (showCenter "unmute")))
+      , ("<XF86AudioLowerVolume>", Vol.lowerVolume 5 >>= showCenter . show . (round :: Double -> Int))
+      , ("<XF86AudioRaiseVolume>", Vol.raiseVolume 5 >>= showCenter . show . (round :: Double -> Int))
+      -- Change the default audio output device
+      , ("M-a", rotateAudioOutput >>= either (showCenter . ("Error: " ++)) showCenter)
       -- Screenshot
       , ("<Print>", X.spawn "screenshot")
       -- Reflect layout horizontally
@@ -108,7 +118,7 @@ main = do
       { Prompt.searchPredicate = myFuzzyFinder
       , Prompt.alwaysHighlight = True
       }
-    workspaces = ["1:main", "2:web", "3:media", "4:meeting"] ++ map show [5 .. 9]
+    workspaces = ["1:main", "2:web", "3:media", "4:meeting"] ++ map show ([5 .. 9] :: [Int])
 
 showNonVisibleWindows :: X ()
 showNonVisibleWindows = do
@@ -120,9 +130,8 @@ showNonVisibleWindows = do
 
 getNonVisibleWindows :: X [X.Window]
 getNonVisibleWindows = do
-  X.XState { X.mapped = mappedWins, X.windowset = ws } <- X.get
+  X.XState { X.mapped = mappedWins } <- X.get
   let visibleWindows :: [X.Window] = Fold.toList mappedWins
-  currentScreen <- W.current <$> X.gets X.windowset
   filter (not . (`elem` visibleWindows))
     . W.integrate'
     . W.stack
@@ -130,14 +139,49 @@ getNonVisibleWindows = do
     . W.current
     <$> X.gets X.windowset
 
-showVolume :: String -> X ()
-showVolume = Dzen.dzenConfig (Dzen.timeout 1 >=> centered)
+showCenter :: String -> X ()
+showCenter msg = Dzen.dzenConfig (Dzen.timeout 1 >=> centered) msg
   where
     centered =
-      Dzen.onCurr (Dzen.center 300 100)
-      >=> Dzen.font "-*-helvetica-*-r-*-*-64-*-*-*-*-*-*-*"
+      Dzen.onCurr (Dzen.center width height)
+      >=> Dzen.font "-*-unifont-*-r-*-*-96-*-*-*-*-*-*-*"
       >=> Dzen.addArgs ["-fg", "#80c0ff"]
       >=> Dzen.addArgs ["-bg", "#000040"]
+    width = 50 * length msg + 100
+    height = 100
+
+callCmd :: X.MonadIO m => NE.NonEmpty String -> m String
+callCmd (cmd :| args) = Run.runProcessWithInput cmd args ""
+
+data Sink = Sink
+  { name :: String
+  , description :: String
+  } deriving (Generic, Show)
+
+instance JSON.FromJSON Sink
+
+rotateAudioOutput :: X.MonadIO m => m (Either String String)
+rotateAudioOutput = E.runExceptT $ do
+  defaultSinkName :: String <- getDefaultSinkName
+    !? "Could not get default sink name"
+  pactlOutput :: String <- callCmd $ "pactl" :| ["--format=json", "list", "sinks"]
+  sinks :: [Sink] <- E.hoistEither . JSON.eitherDecode . cs $ pactlOutput
+  activeSinkIndex :: Int <- L.findIndex ((== defaultSinkName) . name) sinks
+    ?? "Could not find active sink"
+  let nextSinkIndex :: Int = (activeSinkIndex + 1) `mod` length sinks
+  let nextSink :: Sink = sinks !! nextSinkIndex
+  void . callCmd $ "pactl" :| ["set-default-sink", name nextSink]
+  pure $ description nextSink
+  where
+    getDefaultSinkName :: X.MonadIO m => m (Maybe String)
+    getDefaultSinkName = do
+      pacmdOutput <- callCmd $ "pacmd" :| ["stat"]
+      let prefix = "Default sink name: "
+      pure $
+        fmap (drop $ length prefix) .
+        L.find (prefix `L.isPrefixOf`) .
+        lines $
+        pacmdOutput
 
 myFuzzyFinder :: String -> String -> Bool
 myFuzzyFinder a b = map C.toLower a `L.isInfixOf` map C.toLower b

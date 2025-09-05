@@ -7,6 +7,14 @@
       enable = true;
       enableContribAndExtras = true;
       config = builtins.readFile ../programs/xmonad/xmonad.hs;
+      extraPackages = haskellPackages: [
+        haskellPackages.xmonad
+        haskellPackages.xmonad-extras
+        haskellPackages.xmonad-contrib
+        haskellPackages.aeson
+        haskellPackages.string-conversions
+        haskellPackages.errors
+      ];
     };
     displayManager.defaultSession = "none+xmonad";
     autorun = true;

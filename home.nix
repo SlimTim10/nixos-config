@@ -145,7 +145,14 @@ in {
     cabal-install
     nix-prefetch-git
     # GHC included with libraries for compiling XMonad
-    (ghc.withPackages (pkgs: with pkgs; [ xmonad xmonad-extras xmonad-contrib ]))
+    (ghc.withPackages (self: [
+      haskellPackages.xmonad
+      haskellPackages.xmonad-extras
+      haskellPackages.xmonad-contrib
+      haskellPackages.aeson
+      haskellPackages.string-conversions
+      haskellPackages.errors
+    ]))
     ghcid
     nodejs
     gitleaks
