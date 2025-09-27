@@ -114,31 +114,6 @@
           ];
         };
 
-        # Run the following command in the flake's directory to
-        # deploy this configuration on any NixOS system:
-        #   sudo nixos-rebuild switch --flake .#mercury
-        mercury = nixpkgs.lib.nixosSystem {
-          inherit system;
-          inherit specialArgs;
-          modules = modules ++ [
-            ./systems/mercury/cache.nix
-            ./systems/mercury/hardware.nix
-            ./systems/mercury/hardware-configuration.nix
-            ./systems/mercury/services.nix
-            kolide.nixosModules.kolide-launcher
-            home-manager.nixosModules.home-manager
-            {
-              home-manager.useGlobalPkgs = true;
-              home-manager.useUserPackages = true;
-              home-manager.users.tim.imports = [ ./home.nix ./systems/mercury/home.nix ];
-              home-manager.extraSpecialArgs = {
-                inherit nixpkgs-unstable;
-                inherit nixpkgs;
-                inherit flakePkgs;
-              };
-            }
-          ];
-        };
       };
     };
 }
