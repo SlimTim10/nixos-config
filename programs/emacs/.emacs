@@ -457,7 +457,15 @@ Version 2019-11-04 2021-02-16"
 ;; Colour theme
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'dracula t)
+;; For visibility (mouse and cursor)
 (set-mouse-color "green")
+(set-cursor-color "green")
+;; On existing frames
+(set-face-attribute 'mouse nil :background "green")
+(set-face-attribute 'cursor nil :background "green")
+;; On new frames
+(add-to-list 'default-frame-alist '(cursor-color . "green"))
+(add-to-list 'default-frame-alist '(mouse-color . "green"))
 
 ;; Ivy, Counsel, Swiper
 (use-package ivy
