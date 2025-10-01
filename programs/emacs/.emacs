@@ -391,6 +391,7 @@
   (setq dired-recursive-copies 'always) ; "always" means no asking
   (setq dired-recursive-deletes 'always) ; Delete recursively without asking
   (setq dired-isearch-filenames t) ; Limit search commands to file names
+  (setq dired-mouse-drag-files t) ; Allow the mouse to drag files from inside a Dired buffer, to copy to a new location
   (put 'dired-find-alternate-file 'disabled nil) ; Enable useful command
   )
 (use-package dired-subtree :ensure t :after dired)
