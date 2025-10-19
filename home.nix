@@ -47,6 +47,9 @@ in {
       "image/tiff" = "feh.desktop";
       "image/webp" = "feh.desktop";
       "image/bmp" = "feh.desktop";
+      "text/plain" = "emacsclient.desktop";
+      "text/txt" = "emacsclient.desktop";
+      "text/log" = "emacsclient.desktop";
     };
   };
 
@@ -206,6 +209,7 @@ in {
     trash-cli # command-line trash management
     unzip
     ffmpeg
+    rdiff-backup # incremental data backups
   ];
 
   # This value determines the home Manager release that your
