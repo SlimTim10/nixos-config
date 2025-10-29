@@ -75,6 +75,7 @@ in {
 
   programs.git = {
     enable = true;
+    lfs.enable = true;
   };
 
   # For Haskell Reflex FRP
