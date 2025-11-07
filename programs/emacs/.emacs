@@ -804,7 +804,7 @@ behavior added."
 
 ;; agda
 (load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
+                (shell-command-to-string "agda --emacs-mode locate")))
 
 ;; View PDFs
 ;; Installing it with use-package doesn't work. Install it using package-install, then run pdf-tools-install.

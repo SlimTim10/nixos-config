@@ -161,17 +161,7 @@ in {
     nodejs
     gitleaks
     direnv
-    (unstable.agda.withPackages (p: [
-      (p.standard-library.overrideAttrs (oldAttrs: {
-        version = "2.1.1";
-        src =  fetchFromGitHub {
-          repo = "agda-stdlib";
-          owner = "agda";
-          rev = "v2.1.1";
-          hash = "sha256-4HfwNAkIhk1yC/oSxZ30xilzUM5/22nzbUSqTjcW5Ng=";
-        };
-      }))
-    ]))
+    unstable.agda
 
     # accounting
     hledger
