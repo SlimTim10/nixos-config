@@ -600,12 +600,6 @@ Version 2019-11-04 2021-02-16"
 (setq org-cycle-separator-lines 0)
 (setq org-catch-invisible-edits 'show-and-error)
 (setq org-log-into-drawer t)
-(setq org-todo-keywords
- '((sequence "TODO" "DOING" "|" "DONE"))
- )
-(setq org-todo-keyword-faces
- '(("DOING" . "magenta"))
- )
 
 ;; Run this to archive all "DONE" tasks in a file
 (defun org-archive-done-tasks ()
