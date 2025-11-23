@@ -663,7 +663,7 @@ Version 2019-11-04 2021-02-16"
   :bind
   (:map
    projectile-mode-map
-   ("C-x p s" . projectile-ripgrep))
+   ("C-x p s" . counsel-projectile-rg))
   )
 
 ;; Eshell
