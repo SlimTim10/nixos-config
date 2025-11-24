@@ -124,6 +124,7 @@
 (setq show-paren-delay 0)
 (electric-indent-mode 1)
 (electric-pair-mode 1)
+(setq delete-pair-blink-delay 0)
 
 (require 'use-package)
 (require 'use-package-ensure)
