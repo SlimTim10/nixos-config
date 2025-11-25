@@ -10,7 +10,7 @@
   networking.interfaces.enp38s0.useDHCP = true;
   networking.interfaces.wlo1.useDHCP = true;
 
-  users.users.tim.extraGroups = [ "docker" ];
+  # users.users.tim.extraGroups = [ "docker" ];
 
   imports = [
     ../../services/xmonad.nix
@@ -46,7 +46,7 @@
   };
 
   # Docker
-  virtualisation.docker.enable = true;
+  # virtualisation.docker.enable = true;
 
   # Thumbnail support for images in thunar
   services.tumbler.enable = true; 
